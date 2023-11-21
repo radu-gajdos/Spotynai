@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 
 @Data
@@ -24,7 +25,7 @@ public class Album {
     private LocalDate releaseDate;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    private Song songs;
+    private ArrayList<Song> songs;
 
     @OneToOne
     private Artist artist;
