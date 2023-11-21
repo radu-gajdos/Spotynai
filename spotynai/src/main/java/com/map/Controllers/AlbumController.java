@@ -26,6 +26,5 @@ public class AlbumController {
         return albumMapper.mapTo(savedAlbumEntity);
     }
 
-
 }
 
