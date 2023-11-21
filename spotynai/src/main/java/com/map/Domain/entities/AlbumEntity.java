@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,9 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "Album")
+
 public class AlbumEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Song_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Album_id_seq")
     private Long id;
 
     private String title;
