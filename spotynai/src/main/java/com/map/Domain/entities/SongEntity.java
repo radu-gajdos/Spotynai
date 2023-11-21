@@ -1,4 +1,4 @@
-package com.map.Domain;
+package com.map.Domain.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @Entity
 @Table(name = "Song")
-public class Song {
+public class SongEntity {
 
 
     @Id
@@ -22,13 +22,13 @@ public class Song {
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private Album albumId;
+    private AlbumEntity albumEntityId;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    private ArrayList<Artist> artist;
+    private ArrayList<ArtistEntity> artistEntity;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    private ArrayList<Genre> genre;
+    private ArrayList<GenreEntity> genreEntity;
 
     private String title;
 

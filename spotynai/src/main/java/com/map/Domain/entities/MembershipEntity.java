@@ -1,4 +1,4 @@
-package com.map.Domain;
+package com.map.Domain.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "Membership")
 
-public class Membership {
+public class MembershipEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Song_id_seq")

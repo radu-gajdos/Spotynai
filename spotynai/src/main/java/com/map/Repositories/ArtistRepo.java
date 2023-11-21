@@ -1,7 +1,7 @@
 package com.map.Repositories;
 
-import com.map.Domain.Artist;
+import com.map.Domain.entities.ArtistEntity;
 import org.springframework.data.repository.CrudRepository;
 
-public interface ArtistRepo  extends CrudRepository<Artist, Long> {
+public interface ArtistRepo  extends CrudRepository<ArtistEntity, Long> {
 }

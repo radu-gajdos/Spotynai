@@ -1,4 +1,5 @@
-package com.map.Domain;
+package com.map.Domain.dto;
+import com.map.Domain.entities.MembershipEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,12 +10,9 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "Users")
 
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Song_id_seq")
+public class UserDto {
+
     private Long id;
 
     private String username;
@@ -25,8 +23,7 @@ public class User {
 
     private LocalDate dateOfBirth;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Membership membership;
+    private MembershipEntity membershipEntity;
 
     private String userType;
 }

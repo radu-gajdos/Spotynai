@@ -1,33 +1,32 @@
-package com.map.Domain;
-
+package com.map.Domain.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Album")
-public class Album {
+@Table(name = "Users")
+
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Song_id_seq")
     private Long id;
 
-    private String title;
+    private String username;
 
-    private LocalDate releaseDate;
+    private String email;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private ArrayList<Song> songs;
+    private String password;
 
-    @OneToOne
-    private Artist artist;
+    private LocalDate dateOfBirth;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private MembershipEntity membershipEntity;
 
+    private String userType;
 }
