@@ -23,7 +23,7 @@ public class UserDto {
 
     private LocalDate dateOfBirth;
 
-    private MembershipEntity membershipEntity;
+    private MembershipDto membershipDto;
 
     private String userType;
 }

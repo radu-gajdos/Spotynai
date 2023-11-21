@@ -1,6 +1,7 @@
 package com.map.Domain.dto;
 
 import com.map.Domain.entities.AlbumEntity;
+import com.map.Domain.entities.ArtistEntity;
 import com.map.Domain.entities.GenreEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,9 +20,9 @@ public class SongDto {
 
     private AlbumEntity albumEntityId;
 
-    private List<ArtistEntity> artistEntity;
+    private List<ArtistDto> artistDto;
 
-    private List<GenreEntity> genreEntity;
+    private List<GenreDto> genreDto;
 
     private String title;
 

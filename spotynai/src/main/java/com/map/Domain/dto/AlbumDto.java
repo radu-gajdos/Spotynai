@@ -1,7 +1,6 @@
 package com.map.Domain.dto;
 
 import com.map.Domain.entities.ArtistEntity;
-import com.map.Domain.entities.SongEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,9 +21,9 @@ public class AlbumDto {
 
     private LocalDate releaseDate;
 
-    private List<SongEntity> songEntities;
+    private List<SongDto> songDto;
 
-    private ArtistEntity artistEntity;
+    private ArtistDto artistDto;
 
 
 }

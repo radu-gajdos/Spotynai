@@ -19,5 +19,5 @@ public class ArtistDto {
 
     private String bio;
 
-    private List<SongEntity> songEntities;
+    private List<SongDto> songDtos;
 }

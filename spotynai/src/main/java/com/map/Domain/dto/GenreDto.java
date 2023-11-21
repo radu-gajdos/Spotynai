@@ -19,6 +19,6 @@ public class GenreDto {
 
     private String description;
 
-    private List<SongEntity> songEntities;
+    private List<SongDto> songDto;
 
 }

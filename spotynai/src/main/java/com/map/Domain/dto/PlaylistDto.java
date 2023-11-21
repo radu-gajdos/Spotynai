@@ -17,5 +17,5 @@ public class PlaylistDto {
 
     private String title;
 
-    private List<SongEntity> songEntities;
+    private List<SongDto> songDto;
 }
