@@ -31,4 +31,7 @@ public class AlbumEntity {
     private ArtistEntity artistEntity;
 
 
+    public void setSongs(SongEntity song) {
+        songEntities.add(song);
+    }
 }

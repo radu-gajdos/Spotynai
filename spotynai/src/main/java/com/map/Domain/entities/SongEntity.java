@@ -18,7 +18,6 @@ public class SongEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Song_id_seq")
-
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
