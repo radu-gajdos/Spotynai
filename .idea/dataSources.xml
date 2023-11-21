@@ -8,7 +8,7 @@
       <jdbc-url>jdbc:sqlserver://DESKTOP-6C0EROB:50141;database=spotinai</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="postgres@localhost" uuid="edd3f685-e297-4eb7-bad5-4a7a8fd3b517">
+    <data-source source="LOCAL" name="postgres@localhost" uuid="93f49bdf-0294-4109-921f-3938fc8260da">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>

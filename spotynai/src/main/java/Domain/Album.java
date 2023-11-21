@@ -14,7 +14,6 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @Entity
 @Table(name = "Album")
-
 public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Song_id_seq")

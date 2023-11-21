@@ -1,21 +1,14 @@
-version: '3.1'
+version: '3.9'
 
 services:
-
-  db:
+  postgres:
     image: postgres:14-alpine
     ports:
-      - "5432:5432"
-    restart: always
-
+      - 5432:5432
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: admin
-
-#    volumes:
-#      - postgres_volume:/var/lib/postgresql/data
-#    environment:
-#      - POSTGRES_PASSWORD=admin
-#      - POSTGRES_USER=admin
-#      - POSTGRES_DB=spotinai
-#volumes:
-#  postgres_volume:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=postgres
+volumes:
+  postgres_volume:
