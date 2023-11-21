@@ -1,4 +1,4 @@
-package Domain;
+package com.map.Domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

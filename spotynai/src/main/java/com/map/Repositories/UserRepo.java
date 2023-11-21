@@ -1,5 +1,5 @@
-package Repositories;
-import Domain.User;
+package com.map.Repositories;
+import com.map.Domain.User;
 
 import org.springframework.data.repository.CrudRepository;
 

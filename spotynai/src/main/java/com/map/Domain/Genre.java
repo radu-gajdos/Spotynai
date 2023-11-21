@@ -1,27 +1,27 @@
-package Domain;
-
+package com.map.Domain;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Membership")
+@Table(name = "Genre")
 
-public class Membership {
-
+public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Song_id_seq")
     private Long id;
 
-    private  int price;
+    private String name;
 
-    private LocalDate startDate;
+    private String description;
 
-    private LocalDate endDate;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private ArrayList<Song> songs;
+
 }

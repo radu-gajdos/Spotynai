@@ -1,7 +1,6 @@
-package Repositories;
+package com.map.Repositories;
 
-import Domain.Artist;
-import Domain.Membership;
+import com.map.Domain.Artist;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ArtistRepo  extends CrudRepository<Artist, Long> {
