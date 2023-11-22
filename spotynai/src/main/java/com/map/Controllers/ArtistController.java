@@ -16,7 +16,7 @@ public class ArtistController {
     // private AlbumService albumService;
 
 
-    public void Controller(Mapper<ArtistEntity, ArtistDto> artistMapper, ArtistRepo artistRepo) {
+    public ArtistController(Mapper<ArtistEntity, ArtistDto> artistMapper, ArtistRepo artistRepo) {
         this.artistMapper = artistMapper;
         this.artistRepo = artistRepo;
         // this.albumService = albumService;

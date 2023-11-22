@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -24,10 +25,10 @@ public class SongEntity {
     private AlbumEntity albumEntityId;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    private ArrayList<ArtistEntity> artistEntity;
+    private List<ArtistEntity> artistEntity;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    private ArrayList<GenreEntity> genreEntity;
+    private List<GenreEntity> genreEntity;
 
     private String title;
 

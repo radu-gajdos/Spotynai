@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -22,5 +23,5 @@ public class PlaylistEntity {
     private String title;
 
     @ManyToMany
-    private ArrayList<SongEntity> songEntities;
+    private List<SongEntity> songEntities;
 }

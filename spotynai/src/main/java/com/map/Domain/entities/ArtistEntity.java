@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -23,6 +24,6 @@ public class ArtistEntity {
 
     private String bio;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private ArrayList<SongEntity> songEntities;
+    @ManyToMany(mappedBy = "artistEntity", fetch = FetchType.EAGER)
+    private List<SongEntity> songEntities;
 }
