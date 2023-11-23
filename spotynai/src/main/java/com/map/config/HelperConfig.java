@@ -1,12 +1,9 @@
 package com.map.config;
 
 import com.map.Domain.entities.*;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class HelperConfig {
     public static boolean isValidEmail(String email) {
