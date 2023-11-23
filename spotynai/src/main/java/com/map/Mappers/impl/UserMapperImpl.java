@@ -4,7 +4,9 @@ import com.map.Domain.dto.UserDto;
 import com.map.Domain.entities.UserEntity;
 import com.map.Mappers.Mapper;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserMapperImpl implements Mapper<UserEntity, UserDto> {
 
     private final ModelMapper modelMapper;

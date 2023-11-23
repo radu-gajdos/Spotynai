@@ -4,7 +4,9 @@ import com.map.Domain.dto.PodcastDto;
 import com.map.Domain.entities.PodcastEntity;
 import com.map.Mappers.Mapper;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PodcastMapperImpl implements Mapper<PodcastEntity, PodcastDto> {
 
     private final ModelMapper modelMapper;

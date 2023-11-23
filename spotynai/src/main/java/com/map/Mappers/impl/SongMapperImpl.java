@@ -3,8 +3,11 @@ package com.map.Mappers.impl;
 import com.map.Domain.dto.SongDto;
 import com.map.Domain.entities.SongEntity;
 import com.map.Mappers.Mapper;
+import jakarta.persistence.Entity;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SongMapperImpl implements Mapper<SongEntity, SongDto> {
 
     private final ModelMapper modelMapper;
