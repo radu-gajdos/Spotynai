@@ -3,62 +3,71 @@ package com.map.Controllers;
 import com.map.Domain.dto.AlbumDto;
 import com.map.Domain.entities.AlbumEntity;
 import com.map.Mappers.Mapper;
-import com.map.Repositories.AlbumRepo;
-import org.springframework.stereotype.Controller;
+import com.map.Services.AlbumService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.security.InvalidAlgorithmParameterException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-@Controller
+@RestController
 public class AlbumController {
     private Mapper<AlbumEntity, AlbumDto> albumMapper;
+    private AlbumService albumService;
 
-    private AlbumRepo albumRepo;
-    // private AlbumService albumService;
-
-
-    public AlbumController(Mapper<AlbumEntity, AlbumDto> albumMapper, AlbumRepo albumRepo) {
+    public AlbumController(Mapper<AlbumEntity, AlbumDto> albumMapper, AlbumService albumService) {
         this.albumMapper = albumMapper;
-        this.albumRepo = albumRepo;
-        // this.albumService = albumService;
+        this.albumService = albumService;
     }
 
-    public AlbumDto createAlbum(AlbumDto albumDto) {
+    @PostMapping(path = "/albums")
+    public AlbumDto createAlbum(@RequestBody AlbumDto albumDto) {
         AlbumEntity albumEntity = albumMapper.mapFrom(albumDto);
-        AlbumEntity savedAlbumEntity = albumRepo.save(albumEntity);
+        AlbumEntity savedAlbumEntity = albumService.createAlbum(albumEntity);
         return albumMapper.mapTo(savedAlbumEntity);
     }
 
-    public AlbumDto deleteAlbum(AlbumDto albumDto) throws InvalidAlgorithmParameterException {
+    @DeleteMapping(path = "/albums/{id}")
+    public ResponseEntity deleteAlbum(@PathVariable("id") Long id) {
+        albumService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+    }
+
+    @GetMapping(path = "/albums")
+    public List<AlbumDto> listAlbumes() {
+        List<AlbumEntity> albums = albumService.findAll();
+        return albums.stream()
+                .map(albumMapper::mapTo)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping(path = "/albums/{id}")
+public ResponseEntity<AlbumDto> getAlbum(@PathVariable("id") Long id) {
+    Optional<AlbumEntity> foundAlbum = albumService.findOne(id);
+    return foundAlbum.map(albumEntity -> {
+        AlbumDto albumDto = albumMapper.mapTo(albumEntity);
+        return new ResponseEntity<>(albumDto, HttpStatus.OK);
+    }).orElse (new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
+    }
+
+    @PutMapping(path = "albums/{id}")
+    public ResponseEntity<AlbumDto> fullUpdate(
+        @PathVariable("id") Long id,
+        @RequestBody AlbumDto albumDto) {
+        if (!albumService.isExists(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        albumDto.setId(id);
         AlbumEntity albumEntity = albumMapper.mapFrom(albumDto);
-
-        Optional<AlbumEntity> optionalAlbumEntity = albumRepo.findById(albumEntity.getId());
-
-        if (optionalAlbumEntity.isPresent()) {
-            albumRepo.delete(optionalAlbumEntity.get());
-            return albumMapper.mapTo(optionalAlbumEntity.get());
-        } else {
-            throw new InvalidAlgorithmParameterException("The album does not exist!");
-        }
+        AlbumEntity savedAlbumEntity = albumService.createAlbum(albumEntity);
+        return new ResponseEntity<>(
+                albumMapper.mapTo(savedAlbumEntity), HttpStatus.OK);
     }
-
-    public Iterable<AlbumEntity> readAllAlbums() {
-        return albumRepo.findAll();
-    }
-
-    public void update(AlbumDto albumDto, Long searchedAlbumId) throws InvalidAlgorithmParameterException {
-        Optional<AlbumEntity> optionalAlbumEntity = albumRepo.findById(searchedAlbumId);
-
-        if (optionalAlbumEntity.isPresent()) {
-            AlbumEntity existingAlbumEntity = optionalAlbumEntity.get();
-            albumRepo.save(existingAlbumEntity);
-        } else {
-            throw new InvalidAlgorithmParameterException("The album does not exist!");
-        }
-    }
-
-
-
 
 }
 
