@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+@RestController
 
 public class ArtistController {
     private final Mapper<ArtistEntity, ArtistDto> artistMapper;
@@ -22,7 +23,7 @@ public class ArtistController {
         this.artistService = artistService;
     }
 
-    @PostMapping(path = "/artists")
+    @PostMapping(path = "/create_artist")
     public ArtistDto createArtist(@RequestBody ArtistDto artistDto) {
         ArtistEntity artistEntity = artistMapper.mapFrom(artistDto);
         ArtistEntity savedArtistEntity = artistService.createArtist(artistEntity);

@@ -22,14 +22,14 @@ public class AlbumController {
         this.albumService = albumService;
     }
 
-    @PostMapping(path = "/albums")
+    @PostMapping(path = "/create_album")
     public AlbumDto createAlbum(@RequestBody AlbumDto albumDto) {
         AlbumEntity albumEntity = albumMapper.mapFrom(albumDto);
         AlbumEntity savedAlbumEntity = albumService.createAlbum(albumEntity);
         return albumMapper.mapTo(savedAlbumEntity);
     }
 
-    @DeleteMapping(path = "/albums/{id}")
+    @DeleteMapping(path = "/delete_album/{id}")
     public ResponseEntity deleteAlbum(@PathVariable("id") Long id) {
         albumService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -44,7 +44,7 @@ public class AlbumController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping(path = "/albums/{id}")
+    @GetMapping(path = "/album/{id}")
     public ResponseEntity<AlbumDto> getAlbum(@PathVariable("id") Long id) {
         Optional<AlbumEntity> foundAlbum = albumService.findOne(id);
         return foundAlbum.map(albumEntity -> {
@@ -54,7 +54,7 @@ public class AlbumController {
 
     }
 
-    @PutMapping(path = "albums/{id}")
+    @PutMapping(path = "/update_album/{id}")
     public ResponseEntity<AlbumDto> fullUpdate(
             @PathVariable("id") Long id,
             @RequestBody AlbumDto albumDto) {
