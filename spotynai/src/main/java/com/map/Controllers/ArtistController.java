@@ -1,58 +1,71 @@
 package com.map.Controllers;
-
-import com.map.Domain.dto.AlbumDto;
+;
 import com.map.Domain.dto.ArtistDto;
+import com.map.Domain.entities.AlbumEntity;
 import com.map.Domain.entities.ArtistEntity;
 import com.map.Mappers.Mapper;
-import com.map.Repositories.ArtistRepo;
+import com.map.Services.ArtistService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.security.InvalidAlgorithmParameterException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ArtistController {
-    private Mapper<ArtistEntity, ArtistDto> artistMapper;
+    private final Mapper<ArtistEntity, ArtistDto> artistMapper;
+    private final ArtistService artistService;
 
-    private ArtistRepo artistRepo;
-    // private AlbumService albumService;
-
-
-    public ArtistController(Mapper<ArtistEntity, ArtistDto> artistMapper, ArtistRepo artistRepo) {
+    public ArtistController(Mapper<ArtistEntity, ArtistDto> artistMapper, ArtistService artistService) {
         this.artistMapper = artistMapper;
-        this.artistRepo = artistRepo;
-        // this.albumService = albumService;
+        this.artistService = artistService;
     }
 
-    public ArtistDto createArtist(ArtistDto artistDto) {
+    @PostMapping(path = "/artists")
+    public ArtistDto createArtist(@RequestBody ArtistDto artistDto) {
         ArtistEntity artistEntity = artistMapper.mapFrom(artistDto);
-        ArtistEntity sevedArtistEntity = artistRepo.save(artistEntity);
-        return artistMapper.mapTo(sevedArtistEntity);
+        ArtistEntity savedArtistEntity = artistService.createArtist(artistEntity);
+        return artistMapper.mapTo(savedArtistEntity);
     }
 
-    public ArtistDto deleteAlbum(ArtistDto artistDto) throws InvalidAlgorithmParameterException {
+    @DeleteMapping(path = "/artists/{id}")
+    public ResponseEntity deleteAlbum(@PathVariable("id") Long id) {
+        artistService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+    }
+
+    @GetMapping(path = "/artists")
+    public List<ArtistDto> listAlbumes() {
+        List<ArtistEntity> artists = artistService.findAll();
+        return artists.stream()
+                .map(artistMapper::mapTo)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping(path = "/artists/{id}")
+    public ResponseEntity<ArtistDto> getAlbum(@PathVariable("id") Long id) {
+        Optional<ArtistEntity> foundArtist = artistService.findOne(id);
+        return foundArtist.map(artistEntity -> {
+            ArtistDto artistDto = artistMapper.mapTo(artistEntity);
+            return new ResponseEntity<>(artistDto, HttpStatus.OK);
+        }).orElse (new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
+    }
+
+    @PutMapping(path = "artists/{id}")
+    public ResponseEntity<ArtistDto> fullUpdate(
+            @PathVariable("id") Long id,
+            @RequestBody ArtistDto artistDto) {
+        if (!artistService.isExists(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        artistDto.setId(id);
         ArtistEntity artistEntity = artistMapper.mapFrom(artistDto);
-
-        Optional<ArtistEntity> optionalArtistEntity = artistRepo.findById(artistEntity.getId());
-
-        if (optionalArtistEntity.isPresent()) {
-            artistRepo.delete(optionalArtistEntity.get());
-            return artistMapper.mapTo(optionalArtistEntity.get());
-        } else {
-            throw new InvalidAlgorithmParameterException("The artist does not exist!");
-        }
-    }
-
-    public Iterable<ArtistEntity> readAllArtist() {
-        return artistRepo.findAll();
-    }
-
-    public void update(ArtistDto artistDto, Long searcherArtistId) throws InvalidAlgorithmParameterException {
-        Optional<ArtistEntity> optionalArtistEntity = artistRepo.findById(searcherArtistId);
-
-        if (optionalArtistEntity.isPresent()) {
-            ArtistEntity existingAlbumEntity = optionalArtistEntity.get();
-            artistRepo.save(existingAlbumEntity);
-        } else {
-            throw new InvalidAlgorithmParameterException("The artist does not exist!");
-        }
+        ArtistEntity savedArtistEntity = artistService.createArtist(artistEntity);
+        return new ResponseEntity<>(
+                artistMapper.mapTo(savedArtistEntity), HttpStatus.OK);
     }
 }

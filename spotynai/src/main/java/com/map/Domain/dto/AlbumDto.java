@@ -1,6 +1,5 @@
 package com.map.Domain.dto;
 
-import com.map.Domain.entities.ArtistEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class AlbumDto {
+public class ArtistDto {
 
     private Long id;
 
