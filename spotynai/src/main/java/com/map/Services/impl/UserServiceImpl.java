@@ -4,12 +4,13 @@ import com.map.Domain.entities.PlaylistEntity;
 import com.map.Domain.entities.UserEntity;
 import com.map.Repositories.UserRepo;
 import com.map.Services.UserService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
+@Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepo;

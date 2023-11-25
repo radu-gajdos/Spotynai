@@ -5,12 +5,13 @@ import com.map.Domain.entities.PlaylistEntity;
 import com.map.Repositories.ArtistRepo;
 import com.map.Repositories.PlaylistRepo;
 import com.map.Services.PlaylistService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
+@Service
 public class PlaylistServiceImpl implements PlaylistService {
 
     private final PlaylistRepo playlistRepo;

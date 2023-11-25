@@ -4,12 +4,13 @@ import com.map.Domain.entities.PlaylistEntity;
 import com.map.Domain.entities.SongEntity;
 import com.map.Repositories.SongRepo;
 import com.map.Services.SongService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
+@Service
 public class SongServiceImpl implements SongService {
 
     private final SongRepo songRepo;

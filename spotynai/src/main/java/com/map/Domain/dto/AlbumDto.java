@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class ArtistDto {
+public class AlbumDto {
 
     private Long id;
 

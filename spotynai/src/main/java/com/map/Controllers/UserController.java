@@ -1,59 +1,76 @@
 package com.map.Controllers;
 
 import com.map.Domain.dto.UserDto;
+import com.map.Domain.dto.UserDto;
+import com.map.Domain.entities.UserEntity;
 import com.map.Domain.entities.UserEntity;
 import com.map.Mappers.Mapper;
 import com.map.Repositories.UserRepo;
+import com.map.Services.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.InvalidAlgorithmParameterException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
     private Mapper<UserEntity, UserDto> userMapper;
+    private UserService userService;
 
-    private UserRepo userRepo;
-    // private UserService userService;
-
-
-    public UserController(Mapper<UserEntity, UserDto> userMapper, UserRepo userRepo) {
+    public UserController(Mapper<UserEntity, UserDto> userMapper, UserService userService) {
         this.userMapper = userMapper;
-        this.userRepo = userRepo;
-        // this.userService = userService;
+        this.userService = userService;
     }
 
-    public UserDto createUser(UserDto userDto) {
+    @PostMapping(path = "/users")
+    public UserDto createUser(@RequestBody UserDto userDto) {
         UserEntity userEntity = userMapper.mapFrom(userDto);
-        UserEntity savedUserEntity = userRepo.save(userEntity);
+        UserEntity savedUserEntity = userService.createUser(userEntity);
         return userMapper.mapTo(savedUserEntity);
     }
 
-    public UserDto deleteUser(UserDto userDto) throws InvalidAlgorithmParameterException {
+    @DeleteMapping(path = "/users/{id}")
+    public ResponseEntity deleteUser(@PathVariable("id") Long id) {
+        userService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+    }
+
+    @GetMapping(path = "/users")
+    public List<UserDto> listUseres() {
+        List<UserEntity> users = userService.findAll();
+        return users.stream()
+                .map(userMapper::mapTo)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping(path = "/users/{id}")
+    public ResponseEntity<UserDto> getUser(@PathVariable("id") Long id) {
+        Optional<UserEntity> foundUser = userService.findOne(id);
+        return foundUser.map(userEntity -> {
+            UserDto userDto = userMapper.mapTo(userEntity);
+            return new ResponseEntity<>(userDto, HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
+    }
+
+    @PutMapping(path = "users/{id}")
+    public ResponseEntity<UserDto> fullUpdate(
+            @PathVariable("id") Long id,
+            @RequestBody UserDto userDto) {
+        if (!userService.isExists(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        userDto.setId(id);
         UserEntity userEntity = userMapper.mapFrom(userDto);
-
-        Optional<UserEntity> optionalUserEntity = userRepo.findById(userEntity.getId());
-
-        if (optionalUserEntity.isPresent()) {
-            userRepo.delete(optionalUserEntity.get());
-            return userMapper.mapTo(optionalUserEntity.get());
-        } else {
-            throw new InvalidAlgorithmParameterException("The user does not exist!");
-        }
-    }
-
-    public Iterable<UserEntity> readAllUsers() {
-        return userRepo.findAll();
-    }
-
-    public void update(UserDto userDto, Long searchedUserId) throws InvalidAlgorithmParameterException {
-        Optional<UserEntity> optionalUserEntity = userRepo.findById(searchedUserId);
-
-        if (optionalUserEntity.isPresent()) {
-            UserEntity existingUserEntity = optionalUserEntity.get();
-            userRepo.save(existingUserEntity);
-        } else {
-            throw new InvalidAlgorithmParameterException("The user does not exist!");
-        }
+        UserEntity savedUserEntity = userService.createUser(userEntity);
+        return new ResponseEntity<>(
+                userMapper.mapTo(savedUserEntity), HttpStatus.OK);
     }
 }

@@ -5,12 +5,13 @@ import com.map.Domain.entities.GenreEntity;
 import com.map.Repositories.ArtistRepo;
 import com.map.Repositories.GenreRepo;
 import com.map.Services.GenreService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
+@Service
 public class GenreServiceImpl implements GenreService {
     private final GenreRepo genreRepo;
 

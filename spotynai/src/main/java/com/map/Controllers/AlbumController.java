@@ -45,19 +45,19 @@ public class AlbumController {
     }
 
     @GetMapping(path = "/albums/{id}")
-public ResponseEntity<AlbumDto> getAlbum(@PathVariable("id") Long id) {
-    Optional<AlbumEntity> foundAlbum = albumService.findOne(id);
-    return foundAlbum.map(albumEntity -> {
-        AlbumDto albumDto = albumMapper.mapTo(albumEntity);
-        return new ResponseEntity<>(albumDto, HttpStatus.OK);
-    }).orElse (new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<AlbumDto> getAlbum(@PathVariable("id") Long id) {
+        Optional<AlbumEntity> foundAlbum = albumService.findOne(id);
+        return foundAlbum.map(albumEntity -> {
+            AlbumDto albumDto = albumMapper.mapTo(albumEntity);
+            return new ResponseEntity<>(albumDto, HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
     }
 
     @PutMapping(path = "albums/{id}")
     public ResponseEntity<AlbumDto> fullUpdate(
-        @PathVariable("id") Long id,
-        @RequestBody AlbumDto albumDto) {
+            @PathVariable("id") Long id,
+            @RequestBody AlbumDto albumDto) {
         if (!albumService.isExists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
