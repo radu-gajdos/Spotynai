@@ -3,6 +3,8 @@ package com.map.Controllers;
 import com.map.Domain.dto.GenreDto;
 import com.map.Domain.dto.GenreDto;
 import com.map.Domain.dto.GenreDto;
+import com.map.Domain.dto.GenreDto;
+import com.map.Domain.entities.GenreEntity;
 import com.map.Domain.entities.GenreEntity;
 import com.map.Domain.entities.GenreEntity;
 import com.map.Domain.entities.GenreEntity;
@@ -10,6 +12,7 @@ import com.map.Mappers.Mapper;
 import com.map.Repositories.GenreRepo;
 import com.map.Services.GenreService;
 import com.map.Services.GenreService;
+import com.map.config.ObjectUpdater;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Controller
+@RestController
 public class GenreController {
     private Mapper<GenreEntity, GenreDto> genreMapper;
     private GenreService genreService;
@@ -55,17 +58,25 @@ public class GenreController {
 
     }
 
-    @PutMapping(path = "genres/{id}")
+    @PutMapping(path = "/update_genre/{id}")
+
     public ResponseEntity<GenreDto> fullUpdate(
             @PathVariable("id") Long id,
             @RequestBody GenreDto genreDto) {
-        if (!genreService.isExists(id)) {
+        Optional<GenreEntity> existingGenreOptional = genreService.findOne(id);
+
+        if (existingGenreOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        GenreEntity existingGenre = existingGenreOptional.get();
         genreDto.setId(id);
-        GenreEntity genreEntity = genreMapper.mapFrom(genreDto);
-        GenreEntity savedGenreEntity = genreService.createGenre(genreEntity);
+
+        // Use the ObjectUpdater utility
+        ObjectUpdater.updateFields(existingGenre, genreDto);
+
+        GenreEntity savedGenreEntity = genreService.createGenre(existingGenre);
+
         return new ResponseEntity<>(
                 genreMapper.mapTo(savedGenreEntity), HttpStatus.OK);
     }

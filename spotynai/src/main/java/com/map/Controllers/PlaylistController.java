@@ -2,12 +2,15 @@ package com.map.Controllers;
 
 import com.map.Domain.dto.PlaylistDto;
 import com.map.Domain.dto.PlaylistDto;
+import com.map.Domain.dto.PlaylistDto;
+import com.map.Domain.entities.PlaylistEntity;
 import com.map.Domain.entities.PlaylistEntity;
 import com.map.Domain.entities.PlaylistEntity;
 import com.map.Mappers.Mapper;
 import com.map.Repositories.PlaylistRepo;
 import com.map.Services.PlaylistService;
 import com.map.Services.PlaylistService;
+import com.map.config.ObjectUpdater;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -60,17 +63,25 @@ public class PlaylistController {
 
     }
 
-    @PutMapping(path = "playlists/{id}")
+    @PutMapping(path = "/update_playlist/{id}")
+
     public ResponseEntity<PlaylistDto> fullUpdate(
             @PathVariable("id") Long id,
             @RequestBody PlaylistDto playlistDto) {
-        if (!playlistService.isExists(id)) {
+        Optional<PlaylistEntity> existingPlaylistOptional = playlistService.findOne(id);
+
+        if (existingPlaylistOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        PlaylistEntity existingPlaylist = existingPlaylistOptional.get();
         playlistDto.setId(id);
-        PlaylistEntity playlistEntity = playlistMapper.mapFrom(playlistDto);
-        PlaylistEntity savedPlaylistEntity = playlistService.createPlaylist(playlistEntity);
+
+        // Use the ObjectUpdater utility
+        ObjectUpdater.updateFields(existingPlaylist, playlistDto);
+
+        PlaylistEntity savedPlaylistEntity = playlistService.createPlaylist(existingPlaylist);
+
         return new ResponseEntity<>(
                 playlistMapper.mapTo(savedPlaylistEntity), HttpStatus.OK);
     }

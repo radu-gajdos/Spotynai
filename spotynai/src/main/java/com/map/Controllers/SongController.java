@@ -2,11 +2,14 @@ package com.map.Controllers;
 
 import com.map.Domain.dto.SongDto;
 import com.map.Domain.dto.SongDto;
+import com.map.Domain.dto.SongDto;
+import com.map.Domain.entities.SongEntity;
 import com.map.Domain.entities.SongEntity;
 import com.map.Domain.entities.SongEntity;
 import com.map.Mappers.Mapper;
 import com.map.Repositories.SongRepo;
 import com.map.Services.SongService;
+import com.map.config.ObjectUpdater;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -59,17 +62,25 @@ public class SongController {
 
     }
 
-    @PutMapping(path = "songs/{id}")
+    @PutMapping(path = "/update_song/{id}")
+
     public ResponseEntity<SongDto> fullUpdate(
             @PathVariable("id") Long id,
             @RequestBody SongDto songDto) {
-        if (!songService.isExists(id)) {
+        Optional<SongEntity> existingSongOptional = songService.findOne(id);
+
+        if (existingSongOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        SongEntity existingSong = existingSongOptional.get();
         songDto.setId(id);
-        SongEntity songEntity = songMapper.mapFrom(songDto);
-        SongEntity savedSongEntity = songService.createSong(songEntity);
+
+        // Use the ObjectUpdater utility
+        ObjectUpdater.updateFields(existingSong, songDto);
+
+        SongEntity savedSongEntity = songService.createSong(existingSong);
+
         return new ResponseEntity<>(
                 songMapper.mapTo(savedSongEntity), HttpStatus.OK);
     }

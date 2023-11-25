@@ -2,11 +2,14 @@ package com.map.Controllers;
 
 import com.map.Domain.dto.PodcastDto;
 import com.map.Domain.dto.PodcastDto;
+import com.map.Domain.dto.PodcastDto;
+import com.map.Domain.entities.PodcastEntity;
 import com.map.Domain.entities.PodcastEntity;
 import com.map.Domain.entities.PodcastEntity;
 import com.map.Mappers.Mapper;
 import com.map.Repositories.PodcastRepo;
 import com.map.Services.PodcastService;
+import com.map.config.ObjectUpdater;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -59,17 +62,25 @@ public class PodcastController {
 
     }
 
-    @PutMapping(path = "podcasts/{id}")
+    @PutMapping(path = "/update_podcast/{id}")
+
     public ResponseEntity<PodcastDto> fullUpdate(
             @PathVariable("id") Long id,
             @RequestBody PodcastDto podcastDto) {
-        if (!podcastService.isExists(id)) {
+        Optional<PodcastEntity> existingPodcastOptional = podcastService.findOne(id);
+
+        if (existingPodcastOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        PodcastEntity existingPodcast = existingPodcastOptional.get();
         podcastDto.setId(id);
-        PodcastEntity podcastEntity = podcastMapper.mapFrom(podcastDto);
-        PodcastEntity savedPodcastEntity = podcastService.createPodcast(podcastEntity);
+
+        // Use the ObjectUpdater utility
+        ObjectUpdater.updateFields(existingPodcast, podcastDto);
+
+        PodcastEntity savedPodcastEntity = podcastService.createPodcast(existingPodcast);
+
         return new ResponseEntity<>(
                 podcastMapper.mapTo(savedPodcastEntity), HttpStatus.OK);
     }

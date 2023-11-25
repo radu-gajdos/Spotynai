@@ -1,8 +1,10 @@
 package com.map.Controllers;
 
+import com.map.Domain.dto.AlbumDto;
 import com.map.Domain.dto.MembershipDto;
 import com.map.Domain.dto.MembershipDto;
 import com.map.Domain.dto.MembershipDto;
+import com.map.Domain.entities.AlbumEntity;
 import com.map.Domain.entities.MembershipEntity;
 import com.map.Domain.entities.MembershipEntity;
 import com.map.Domain.entities.MembershipEntity;
@@ -10,6 +12,7 @@ import com.map.Mappers.Mapper;
 import com.map.Repositories.MembershipRepo;
 import com.map.Services.MembershipService;
 import com.map.Services.MembershipService;
+import com.map.config.ObjectUpdater;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -62,17 +65,25 @@ public class MembershipController {
 
     }
 
-    @PutMapping(path = "memberships/{id}")
+    @PutMapping(path = "/update_membership/{id}")
+
     public ResponseEntity<MembershipDto> fullUpdate(
             @PathVariable("id") Long id,
             @RequestBody MembershipDto membershipDto) {
-        if (!membershipService.isExists(id)) {
+        Optional<MembershipEntity> existingMembershipOptional = membershipService.findOne(id);
+
+        if (existingMembershipOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        MembershipEntity existingMembership = existingMembershipOptional.get();
         membershipDto.setId(id);
-        MembershipEntity membershipEntity = membershipMapper.mapFrom(membershipDto);
-        MembershipEntity savedMembershipEntity = membershipService.createMembership(membershipEntity);
+
+        // Use the ObjectUpdater utility
+        ObjectUpdater.updateFields(existingMembership, membershipDto);
+
+        MembershipEntity savedMembershipEntity = membershipService.createMembership(existingMembership);
+
         return new ResponseEntity<>(
                 membershipMapper.mapTo(savedMembershipEntity), HttpStatus.OK);
     }

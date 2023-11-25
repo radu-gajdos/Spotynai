@@ -2,11 +2,15 @@ package com.map.Controllers;
 
 import com.map.Domain.dto.UserDto;
 import com.map.Domain.dto.UserDto;
+import com.map.Domain.dto.UserDto;
+import com.map.Domain.entities.UserEntity;
 import com.map.Domain.entities.UserEntity;
 import com.map.Domain.entities.UserEntity;
 import com.map.Mappers.Mapper;
 import com.map.Repositories.UserRepo;
 import com.map.Services.UserService;
+import com.map.Services.UserService;
+import com.map.config.ObjectUpdater;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Controller
+@RestController
 public class UserController {
     private Mapper<UserEntity, UserDto> userMapper;
     private UserService userService;
@@ -27,14 +31,14 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping(path = "/users")
+    @PostMapping(path = "/create_user")
     public UserDto createUser(@RequestBody UserDto userDto) {
         UserEntity userEntity = userMapper.mapFrom(userDto);
         UserEntity savedUserEntity = userService.createUser(userEntity);
         return userMapper.mapTo(savedUserEntity);
     }
 
-    @DeleteMapping(path = "/users/{id}")
+    @DeleteMapping(path = "/delete_user/{id}")
     public ResponseEntity deleteUser(@PathVariable("id") Long id) {
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -49,7 +53,7 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping(path = "/users/{id}")
+    @GetMapping(path = "/user/{id}")
     public ResponseEntity<UserDto> getUser(@PathVariable("id") Long id) {
         Optional<UserEntity> foundUser = userService.findOne(id);
         return foundUser.map(userEntity -> {
@@ -59,18 +63,28 @@ public class UserController {
 
     }
 
-    @PutMapping(path = "users/{id}")
+    @PutMapping(path = "/update_user/{id}")
+
     public ResponseEntity<UserDto> fullUpdate(
             @PathVariable("id") Long id,
             @RequestBody UserDto userDto) {
-        if (!userService.isExists(id)) {
+        Optional<UserEntity> existingUserOptional = userService.findOne(id);
+
+        if (existingUserOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        UserEntity existingUser = existingUserOptional.get();
         userDto.setId(id);
-        UserEntity userEntity = userMapper.mapFrom(userDto);
-        UserEntity savedUserEntity = userService.createUser(userEntity);
+
+        // Use the ObjectUpdater utility
+        ObjectUpdater.updateFields(existingUser, userDto);
+
+        UserEntity savedUserEntity = userService.createUser(existingUser);
+
         return new ResponseEntity<>(
                 userMapper.mapTo(savedUserEntity), HttpStatus.OK);
     }
+
+
 }

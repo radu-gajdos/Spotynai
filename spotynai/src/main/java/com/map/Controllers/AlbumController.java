@@ -1,9 +1,14 @@
 package com.map.Controllers;
 
 import com.map.Domain.dto.AlbumDto;
+import com.map.Domain.dto.AlbumDto;
+import com.map.Domain.dto.AlbumDto;
+import com.map.Domain.entities.AlbumEntity;
+import com.map.Domain.entities.AlbumEntity;
 import com.map.Domain.entities.AlbumEntity;
 import com.map.Mappers.Mapper;
 import com.map.Services.AlbumService;
+import com.map.config.ObjectUpdater;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -55,16 +60,24 @@ public class AlbumController {
     }
 
     @PutMapping(path = "/update_album/{id}")
+
     public ResponseEntity<AlbumDto> fullUpdate(
             @PathVariable("id") Long id,
             @RequestBody AlbumDto albumDto) {
-        if (!albumService.isExists(id)) {
+        Optional<AlbumEntity> existingAlbumOptional = albumService.findOne(id);
+
+        if (existingAlbumOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        AlbumEntity existingAlbum = existingAlbumOptional.get();
         albumDto.setId(id);
-        AlbumEntity albumEntity = albumMapper.mapFrom(albumDto);
-        AlbumEntity savedAlbumEntity = albumService.createAlbum(albumEntity);
+
+        // Use the ObjectUpdater utility
+        ObjectUpdater.updateFields(existingAlbum, albumDto);
+
+        AlbumEntity savedAlbumEntity = albumService.createAlbum(existingAlbum);
+
         return new ResponseEntity<>(
                 albumMapper.mapTo(savedAlbumEntity), HttpStatus.OK);
     }
