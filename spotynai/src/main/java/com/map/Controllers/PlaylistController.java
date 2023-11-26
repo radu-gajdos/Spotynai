@@ -22,6 +22,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
+@CrossOrigin(origins = "http://localhost:5500")
 public class PlaylistController {
     private Mapper<PlaylistEntity, PlaylistDto> playlistMapper;
     private PlaylistService playlistService;

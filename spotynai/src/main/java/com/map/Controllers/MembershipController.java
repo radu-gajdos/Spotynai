@@ -24,6 +24,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
+@CrossOrigin(origins = "http://localhost:5500")
 public class MembershipController {
     private Mapper<MembershipEntity, MembershipDto> membershipMapper;
     private MembershipService membershipService;

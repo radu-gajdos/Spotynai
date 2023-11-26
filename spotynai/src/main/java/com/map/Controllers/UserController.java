@@ -22,6 +22,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5500")
 public class UserController {
     private Mapper<UserEntity, UserDto> userMapper;
     private UserService userService;

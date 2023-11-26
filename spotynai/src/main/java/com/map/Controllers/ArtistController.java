@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 @RestController
+@CrossOrigin(origins = "http://localhost:5500")
 public class ArtistController {
     private final Mapper<ArtistEntity, ArtistDto> artistMapper;
     private final ArtistService artistService;
@@ -31,7 +32,7 @@ public class ArtistController {
         return artistMapper.mapTo(savedArtistEntity);
     }
 
-    @DeleteMapping(path = "/artists/{id}")
+    @DeleteMapping(path = "/delete_artist/{id}")
     public ResponseEntity deleteArtist(@PathVariable("id") Long id) {
         artistService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

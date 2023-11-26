@@ -24,6 +24,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5500")
 public class GenreController {
     private Mapper<GenreEntity, GenreDto> genreMapper;
     private GenreService genreService;

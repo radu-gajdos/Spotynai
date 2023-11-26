@@ -21,6 +21,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
+@CrossOrigin(origins = "http://localhost:5500")
 public class PodcastController {
     private Mapper<PodcastEntity, PodcastDto> podcastMapper;
     private PodcastService podcastService;
