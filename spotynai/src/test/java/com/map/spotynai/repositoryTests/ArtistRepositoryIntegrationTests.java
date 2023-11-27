@@ -2,6 +2,7 @@ package com.map.spotynai.repositoryTests;
 
 import com.map.Domain.entities.ArtistEntity;
 import com.map.Repositories.ArtistRepo;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +18,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class ArtistRepositoryIntegrationTests {
-    private final ArtistRepo underTest;
-
     @Autowired
-    public ArtistRepositoryIntegrationTests(ArtistRepo underTest) {
-        this.underTest = underTest;
-    }
+    private ArtistRepo underTest;
+
 
     @Test
+    @Transactional
     public void testThatArtistCanBeCreatedAndRecalled() {
         ArtistEntity artistEntity = new ArtistEntity(null, "Guta", "Regele manelelor", null, null);
         underTest.save(artistEntity);
@@ -36,6 +35,7 @@ public class ArtistRepositoryIntegrationTests {
     }
 
     @Test
+    @Transactional
     public void testThatMultipleArtistsCanBeCreatedAndRecalled() {
         ArtistEntity artistEntity = new ArtistEntity(null, "Guta", "Regele manelelor", null, null);
         underTest.save(artistEntity);
