@@ -105,7 +105,7 @@ public class HelperConfig {
     }
 
     public static ArtistEntity iaArtist() {
-        return new ArtistEntity(null, "Guta", "Regele manelelor", null);
+        return new ArtistEntity(null, "Guta", "Regele manelelor", null, null);
     }
 
     public static List<UserEntity> iaUseri() {

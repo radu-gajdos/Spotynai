@@ -1,10 +1,6 @@
 package com.map.Controllers;
 
 import com.map.Domain.dto.AlbumDto;
-import com.map.Domain.dto.AlbumDto;
-import com.map.Domain.dto.AlbumDto;
-import com.map.Domain.entities.AlbumEntity;
-import com.map.Domain.entities.AlbumEntity;
 import com.map.Domain.entities.AlbumEntity;
 import com.map.Mappers.Mapper;
 import com.map.Services.AlbumService;
@@ -75,7 +71,6 @@ public class AlbumController {
         AlbumEntity existingAlbum = existingAlbumOptional.get();
         albumDto.setId(id);
 
-        // Use the ObjectUpdater utility
         ObjectUpdater.updateFields(existingAlbum, albumDto);
 
         AlbumEntity savedAlbumEntity = albumService.createAlbum(existingAlbum);

@@ -1,4 +1,6 @@
 package com.map.Domain.entities;
+import com.map.Domain.observer.Observer;
+import com.map.Domain.observer.Subject;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +14,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "Users")
 
-public class UserEntity {
+public class UserEntity implements Observer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Song_id_seq")
     private Long id;
@@ -29,4 +31,12 @@ public class UserEntity {
     private MembershipEntity membershipEntity;
 
     private String userType;
+
+    @Override
+    public void update(Subject subject) {
+        if (subject instanceof ArtistEntity artist) {
+            System.out.println(username + " received an update: Artist:  " + artist.getName() + " added a new song!");
+        }
+    }
+
 }

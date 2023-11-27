@@ -78,7 +78,6 @@ public class UserController {
         UserEntity existingUser = existingUserOptional.get();
         userDto.setId(id);
 
-        // Use the ObjectUpdater utility
         ObjectUpdater.updateFields(existingUser, userDto);
 
         UserEntity savedUserEntity = userService.createUser(existingUser);
