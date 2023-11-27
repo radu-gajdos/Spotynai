@@ -1,5 +1,6 @@
 package com.map;
 
+import com.map.Repositories.ArtistRepo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
