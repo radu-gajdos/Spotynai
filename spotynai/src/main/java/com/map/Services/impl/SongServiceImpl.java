@@ -27,7 +27,7 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public SongEntity createSong(SongEntity songEntity) {
-        String a =  songEntity.getTitle() + " by " + songEntity.getArtistEntity().getFirst().getName() + "was added";
+        String a =  songEntity.getTitle() + " by " + songEntity.getArtistEntity() + "was added";
         Notification notification = new Notification(null,"New song added ",a, LocalDate.now());
         notificationRepo.save(notification);
         return songRepo.save(songEntity);

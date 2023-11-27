@@ -11,6 +11,7 @@ import com.map.Repositories.UserRepo;
 import com.map.Services.UserService;
 import com.map.Services.UserService;
 import com.map.config.ObjectUpdater;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,13 +25,11 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin(origins = "http://localhost:5500")
 public class UserController {
+    @Autowired
     private Mapper<UserEntity, UserDto> userMapper;
+    @Autowired
     private UserService userService;
 
-    public UserController(Mapper<UserEntity, UserDto> userMapper, UserService userService) {
-        this.userMapper = userMapper;
-        this.userService = userService;
-    }
 
     @PostMapping(path = "/create_user")
     public UserDto createUser(@RequestBody UserDto userDto) {

@@ -10,6 +10,7 @@ import com.map.Mappers.Mapper;
 import com.map.Repositories.PodcastRepo;
 import com.map.Services.PodcastService;
 import com.map.config.ObjectUpdater;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,13 +24,12 @@ import java.util.stream.Collectors;
 @Controller
 @CrossOrigin(origins = "http://localhost:5500")
 public class PodcastController {
+    @Autowired
     private Mapper<PodcastEntity, PodcastDto> podcastMapper;
+    @Autowired
     private PodcastService podcastService;
 
-    public PodcastController(Mapper<PodcastEntity, PodcastDto> podcastMapper, PodcastService podcastService) {
-        this.podcastMapper = podcastMapper;
-        this.podcastService = podcastService;
-    }
+
 
     @PostMapping(path = "/podcasts")
     public PodcastDto createPodcast(@RequestBody PodcastDto podcastDto) {

@@ -13,6 +13,7 @@ import com.map.Repositories.GenreRepo;
 import com.map.Services.GenreService;
 import com.map.Services.GenreService;
 import com.map.config.ObjectUpdater;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,9 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin(origins = "http://localhost:5500")
 public class GenreController {
+    @Autowired
     private Mapper<GenreEntity, GenreDto> genreMapper;
+    @Autowired
     private GenreService genreService;
 
     public GenreController(Mapper<GenreEntity, GenreDto> genreMapper, GenreService genreService) {

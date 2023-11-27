@@ -7,6 +7,7 @@ import com.map.Domain.entities.ArtistEntity;
 import com.map.Mappers.Mapper;
 import com.map.Services.ArtistService;
 import com.map.config.ObjectUpdater;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +18,11 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin(origins = "http://localhost:5500")
 public class ArtistController {
-    private final Mapper<ArtistEntity, ArtistDto> artistMapper;
-    private final ArtistService artistService;
+    @Autowired
+    private  Mapper<ArtistEntity, ArtistDto> artistMapper;
+    @Autowired
+    private  ArtistService artistService;
 
-    public ArtistController(Mapper<ArtistEntity, ArtistDto> artistMapper, ArtistService artistService) {
-        this.artistMapper = artistMapper;
-        this.artistService = artistService;
-    }
 
     @PostMapping(path = "/create_artist")
     public ArtistDto createArtist(@RequestBody ArtistDto artistDto) {

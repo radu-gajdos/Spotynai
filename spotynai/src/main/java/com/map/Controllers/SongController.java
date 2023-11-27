@@ -1,44 +1,37 @@
 package com.map.Controllers;
-
+;
 import com.map.Domain.dto.SongDto;
 import com.map.Domain.dto.SongDto;
-import com.map.Domain.dto.SongDto;
-import com.map.Domain.entities.SongEntity;
 import com.map.Domain.entities.SongEntity;
 import com.map.Domain.entities.SongEntity;
 import com.map.Mappers.Mapper;
-import com.map.Repositories.SongRepo;
 import com.map.Services.SongService;
 import com.map.config.ObjectUpdater;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.InvalidAlgorithmParameterException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-@Controller
+@RestController
 @CrossOrigin(origins = "http://localhost:5500")
 public class SongController {
-    private Mapper<SongEntity, SongDto> songMapper;
-    private SongService songService;
+    @Autowired
+    private  Mapper<SongEntity, SongDto> songMapper;
+    @Autowired
+    private  SongService songService;
 
-    public SongController(Mapper<SongEntity, SongDto> songMapper, SongService songService) {
-        this.songMapper = songMapper;
-        this.songService = songService;
-    }
 
-    @PostMapping(path = "/songs")
+    @PostMapping(path = "/create_song")
     public SongDto createSong(@RequestBody SongDto songDto) {
         SongEntity songEntity = songMapper.mapFrom(songDto);
         SongEntity savedSongEntity = songService.createSong(songEntity);
         return songMapper.mapTo(savedSongEntity);
     }
 
-    @DeleteMapping(path = "/songs/{id}")
+    @DeleteMapping(path = "/delete_song/{id}")
     public ResponseEntity deleteSong(@PathVariable("id") Long id) {
         songService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -59,7 +52,7 @@ public class SongController {
         return foundSong.map(songEntity -> {
             SongDto songDto = songMapper.mapTo(songEntity);
             return new ResponseEntity<>(songDto, HttpStatus.OK);
-        }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        }).orElse (new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
     }
 

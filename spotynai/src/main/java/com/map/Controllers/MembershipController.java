@@ -13,6 +13,7 @@ import com.map.Repositories.MembershipRepo;
 import com.map.Services.MembershipService;
 import com.map.Services.MembershipService;
 import com.map.config.ObjectUpdater;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,9 @@ import java.util.stream.Collectors;
 @Controller
 @CrossOrigin(origins = "http://localhost:5500")
 public class MembershipController {
+    @Autowired
     private Mapper<MembershipEntity, MembershipDto> membershipMapper;
+    @Autowired
     private MembershipService membershipService;
 
     public MembershipController(Mapper<MembershipEntity, MembershipDto> membershipMapper, MembershipService membershipService) {
