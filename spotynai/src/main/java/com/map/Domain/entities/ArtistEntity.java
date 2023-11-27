@@ -1,6 +1,5 @@
 package com.map.Domain.entities;
 
-import com.map.Domain.observer.Observer;
 import com.map.Domain.observer.Subject;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -47,5 +46,10 @@ public class ArtistEntity implements Subject {
         for (UserEntity observer : this.observers) {
             observer.update(this);
         }
+    }
+
+    public void addSong(SongEntity songEntity) {
+        notifyObservers();
+        this.songEntities.add(songEntity);
     }
 }

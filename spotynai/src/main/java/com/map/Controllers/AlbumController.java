@@ -5,6 +5,7 @@ import com.map.Domain.entities.AlbumEntity;
 import com.map.Mappers.Mapper;
 import com.map.Services.AlbumService;
 import com.map.config.ObjectUpdater;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +18,10 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:5500")
 
 public class AlbumController {
+    @Autowired
     private Mapper<AlbumEntity, AlbumDto> albumMapper;
+    @Autowired
     private AlbumService albumService;
-
-    public AlbumController(Mapper<AlbumEntity, AlbumDto> albumMapper, AlbumService albumService) {
-        this.albumMapper = albumMapper;
-        this.albumService = albumService;
-    }
 
     @PostMapping(path = "/create_album")
     public AlbumDto createAlbum(@RequestBody AlbumDto albumDto) {
