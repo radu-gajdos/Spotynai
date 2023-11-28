@@ -76,7 +76,6 @@ public class GenreController {
         GenreEntity existingGenre = existingGenreOptional.get();
         genreDto.setId(id);
 
-        // Use the ObjectUpdater utility
         ObjectUpdater.updateFields(existingGenre, genreDto);
 
         GenreEntity savedGenreEntity = genreService.createGenre(existingGenre);

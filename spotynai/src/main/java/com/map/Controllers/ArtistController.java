@@ -70,7 +70,6 @@ public class ArtistController {
         ArtistEntity existingArtist = existingArtistOptional.get();
         artistDto.setId(id);
 
-        // Use the ObjectUpdater utility
         ObjectUpdater.updateFields(existingArtist, artistDto);
 
         ArtistEntity savedArtistEntity = artistService.createArtist(existingArtist);

@@ -77,7 +77,6 @@ public class PodcastController {
         PodcastEntity existingPodcast = existingPodcastOptional.get();
         podcastDto.setId(id);
 
-        // Use the ObjectUpdater utility
         ObjectUpdater.updateFields(existingPodcast, podcastDto);
 
         PodcastEntity savedPodcastEntity = podcastService.createPodcast(existingPodcast);

@@ -81,7 +81,6 @@ public class PlaylistController {
         PlaylistEntity existingPlaylist = existingPlaylistOptional.get();
         playlistDto.setId(id);
 
-        // Use the ObjectUpdater utility
         ObjectUpdater.updateFields(existingPlaylist, playlistDto);
 
         PlaylistEntity savedPlaylistEntity = playlistService.createPlaylist(existingPlaylist);

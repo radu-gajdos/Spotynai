@@ -83,7 +83,6 @@ public class MembershipController {
         MembershipEntity existingMembership = existingMembershipOptional.get();
         membershipDto.setId(id);
 
-        // Use the ObjectUpdater utility
         ObjectUpdater.updateFields(existingMembership, membershipDto);
 
         MembershipEntity savedMembershipEntity = membershipService.createMembership(existingMembership);

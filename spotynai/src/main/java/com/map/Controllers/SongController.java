@@ -70,7 +70,6 @@ public class SongController {
         SongEntity existingSong = existingSongOptional.get();
         songDto.setId(id);
 
-        // Use the ObjectUpdater utility
         ObjectUpdater.updateFields(existingSong, songDto);
 
         SongEntity savedSongEntity = songService.createSong(existingSong);
