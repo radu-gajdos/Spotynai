@@ -19,4 +19,6 @@ public interface UserService {
     void delete(Long id);
 
     boolean authenticateUser(String username, String password);
+
+    boolean isUsernameTaken(String username);
 }

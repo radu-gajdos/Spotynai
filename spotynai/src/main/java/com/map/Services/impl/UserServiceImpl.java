@@ -53,4 +53,9 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userRepo.findByUsernameAndPassword(username, password);
         return user != null;
     }
+
+    @Override
+    public boolean isUsernameTaken(String username) {
+        return userRepo.existsByUsername(username);
+    }
 }
