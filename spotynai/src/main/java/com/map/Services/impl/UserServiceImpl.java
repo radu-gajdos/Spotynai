@@ -47,4 +47,10 @@ public class UserServiceImpl implements UserService {
     public void delete(Long id) {
         userRepo.deleteById(id);
     }
+
+    @Override
+    public boolean authenticateUser(String username, String password) {
+        UserEntity user = userRepo.findByUsernameAndPassword(username, password);
+        return user != null;
+    }
 }

@@ -17,4 +17,6 @@ public interface UserService {
     boolean isExists(Long id);
 
     void delete(Long id);
+
+    boolean authenticateUser(String username, String password);
 }
