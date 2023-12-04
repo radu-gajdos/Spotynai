@@ -58,4 +58,5 @@ public class UserServiceImpl implements UserService {
     public boolean isUsernameTaken(String username) {
         return userRepo.existsByUsername(username);
     }
+
 }

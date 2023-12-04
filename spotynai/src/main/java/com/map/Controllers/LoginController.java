@@ -1,5 +1,6 @@
 package com.map.Controllers;
 
+import org.springframework.ui.Model;
 import com.map.Domain.entities.UserEntity;
 import com.map.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDate;
 
 @RestController
 public class LoginController {
@@ -22,14 +21,14 @@ public class LoginController {
 
     @PostMapping("/login")
     @CrossOrigin(origins = "http://localhost:63342")
-    public String login(@RequestParam String username, @RequestParam String password) {
+    public String login(@RequestParam String username, @RequestParam String password, Model model) {
         boolean isAuthenticated = userService.authenticateUser(username, password);
 
         if (isAuthenticated) {
-            // Redirect to a success page or perform other actions
-            return "redirect:/artists";
+            model.addAttribute("userDisplayName", username);
+
+            return "homepage";
         } else {
-            // Add an error message to the model and return to the login page
             return "login";
         }
     }

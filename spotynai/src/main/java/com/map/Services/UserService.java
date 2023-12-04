@@ -21,4 +21,5 @@ public interface UserService {
     boolean authenticateUser(String username, String password);
 
     boolean isUsernameTaken(String username);
+
 }
