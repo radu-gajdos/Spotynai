@@ -54,6 +54,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Long getUserIdByUsername(String username) {
+        UserEntity user = userRepo.findByUsername(username);
+        return user != null ? user.getId() : null;
+    }
+
+    @Override
     public boolean isUsernameTaken(String username) {
         return userRepo.existsByUsername(username);
     }

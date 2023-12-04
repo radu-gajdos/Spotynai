@@ -25,8 +25,7 @@ public class LoginController {
 
         if (isAuthenticated) {
             model.addAttribute("userDisplayName", username);
-
-            return "homepage";
+            return "redirect:/homepage";
         } else {
             return "login+signup";
         }

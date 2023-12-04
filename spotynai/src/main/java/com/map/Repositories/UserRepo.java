@@ -8,4 +8,6 @@ public interface UserRepo extends CrudRepository<UserEntity, Long> {
     UserEntity findByUsernameAndPassword(String username, String password);
 
     boolean existsByUsername(String username);
+
+    UserEntity findByUsername(String username);
 }
