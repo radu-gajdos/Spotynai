@@ -1,6 +1,5 @@
 package com.map.Services.impl;
 
-import com.map.Domain.entities.PlaylistEntity;
 import com.map.Domain.entities.UserEntity;
 import com.map.Repositories.UserRepo;
 import com.map.Services.UserService;

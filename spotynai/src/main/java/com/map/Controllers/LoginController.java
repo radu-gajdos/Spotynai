@@ -1,15 +1,14 @@
 package com.map.Controllers;
 
-import org.springframework.ui.Model;
+import org.springframework.stereotype.Controller;
 import com.map.Domain.entities.UserEntity;
 import com.map.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
+
+@Controller
 public class LoginController {
 
     @Autowired
@@ -29,8 +28,14 @@ public class LoginController {
 
             return "homepage";
         } else {
-            return "login";
+            return "login+signup";
         }
+    }
+
+    @GetMapping("/login")
+    @CrossOrigin(origins = "http://localhost:63342")
+    public String getLogin() {
+            return "login+signup";
     }
 
     @PostMapping("/signup")

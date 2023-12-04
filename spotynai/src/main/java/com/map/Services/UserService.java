@@ -22,4 +22,6 @@ public interface UserService {
 
     boolean isUsernameTaken(String username);
 
+    Long getUserIdByUsername(String username);
+
 }
