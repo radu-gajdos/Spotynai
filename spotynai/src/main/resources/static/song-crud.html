@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Song CRUD</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #333; /* Set default text color */
+        }
+
+        form {
+            margin-bottom: 20px;
+            max-width: 400px; /* Set maximum width for the form */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666; /* Label text color */
+        }
+
+        input {
+            padding: 10px; /* Increased padding for better visibility */
+            margin-bottom: 12px;
+            width: 100%;
+            box-sizing: border-box; /* Include padding in width */
+            border: 1px solid #ddd; /* Add a subtle border */
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px; /* Increased padding for better visibility */
+            cursor: pointer;
+            background-color: #4CAF50; /* Green background color */
+            color: #fff; /* White text color */
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px; /* Add margin to the top of the table */
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Delete button styles */
+        .delete-button {
+            padding: 8px;
+            cursor: pointer;
+            background-color: #e91e63;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-button:hover {
+            background-color: #c2185b;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Song CRUD Operations</h2>
+
+<!-- Create Song Form -->
+<form id="createSongForm">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+
+    <label for="artist">Artist:</label>
+    <input type="text" id="artist" name="artist" required>
+
+    <label for="album">Album:</label>
+    <input type="text" id="album" name="album" required>
+
+    <label for="genre">Genre:</label>
+    <input type="text" id="genre" name="genre" required>
+
+    <label for="duration">Duration (seconds):</label>
+    <input type="number" id="duration" name="duration" required>
+
+    <label for="releaseDate">Release Date:</label>
+    <input type="date" id="releaseDate" name="releaseDate" required>
+
+    <label for="lyrics">Lyrics:</label>
+    <textarea id="lyrics" name="lyrics" rows="4"></textarea>
+
+    <button type="button" onclick="createSong()">Create Song</button>
+</form>
+
+
+<!-- Song List -->
+<h3>Song List</h3>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Artist</th>
+        <th>Album</th>
+        <th>Genre</th>
+        <th>Duration</th>
+        <th>Release Date</th>
+        <th>Lyrics</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody id="songListBody"></tbody>
+</table>
+
+
+<script>
+    window.onload = function () {
+        listSongs();
+    };
+
+    function createSong() {
+        var title = document.getElementById('title').value;
+        var artist = document.getElementById('artist').value;
+        var album = document.getElementById('album').value;
+        var genre = document.getElementById('genre').value;
+        var duration = document.getElementById('duration').value;
+        var releaseDate = document.getElementById('releaseDate').value;
+        var lyrics = document.getElementById('lyrics').value;
+
+        var songDto = {
+            title: title,
+            artist: artist,
+            album: album,
+            genre: genre,
+            duration: duration,
+            releaseDate: releaseDate,
+            lyrics: lyrics
+            // Include other attributes as needed
+        };
+
+        fetch('http://localhost:8080/create_song', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(songDto)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Song created:', data);
+                listSongs(); // Refresh the song list after creating a new song
+            })
+            .catch(error => console.error('Error creating song:', error));
+    }
+
+
+    function deleteSong(id) {
+        fetch('http://localhost:8080/delete_song/' + id, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Song deleted successfully');
+                    listSongs();
+                } else {
+                    console.error('Error deleting song:', response.statusText);
+                }
+            })
+            .catch(error => console.error('Error deleting song:', error));
+    }
+
+    function listSongs() {
+        fetch('http://localhost:8080/songs')
+            .then(response => response.json())
+            .then(songs => {
+                var songListBody = document.getElementById('songListBody');
+                songListBody.innerHTML = ''; // Clear the existing content
+
+                songs.forEach(song => {
+                    var row = songListBody.insertRow();
+                    row.insertCell(0).textContent = song.id;
+                    row.insertCell(1).textContent = song.title;
+                    row.insertCell(2).textContent = song.artist;
+                    row.insertCell(3).textContent = song.album ? song.album.title : ''; // Assuming Album has a 'title' attribute
+                    row.insertCell(4).textContent = song.genre ? song.genre.name : ''; // Assuming Genre has a 'name' attribute
+                    row.insertCell(5).textContent = song.duration;
+                    row.insertCell(6).textContent = song.releaseDate;
+                    row.insertCell(7).textContent = song.lyrics;
+
+                    var deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.className = 'delete-button'; // Added class for styling
+                    deleteButton.onclick = function () {
+                        deleteSong(song.id);
+                    };
+
+                    var cell = row.insertCell(8);
+                    cell.appendChild(deleteButton);
+                });
+            })
+            .catch(error => console.error('Error fetching songs:', error));
+    }
+
+</script>
+
+</body>
+
+</html>

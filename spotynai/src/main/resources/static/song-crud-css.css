@@ -1,0 +1,161 @@
+/* Add the following styles for the table */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #394867; /* Dark blue-gray border color */
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #1f253d; /* Dark blue background for header cells */
+    color: #11a8ab; /* Teal text color for header cells */
+}
+
+/* Optional: Add hover effect for table rows */
+tr:hover {
+    background-color: #2c344e; /* Slightly lighter blue background on hover */
+}
+
+/* Optional: Style alternate rows differently */
+tr:nth-child(even) {
+    background-color: #2c344e; /* Slightly lighter blue background for alternate rows */
+}
+
+/* Update other styles with new color scheme */
+
+body {
+    background: #2c344e; /* Dark blue-gray background */
+    font-family: 'Ubuntu', sans-serif; /* Ubuntu font family */
+    margin: 20px;
+    color: #d3d6f0; /* Light gray text color */
+}
+
+h1 {
+    font-size: 23px;
+    color: #11a8ab; /* Teal heading color */
+}
+
+h2 {
+    font-size: 17px;
+    color: #11a8ab; /* Teal heading color */
+}
+
+p {
+    font-size: 15px;
+    color: #d3d6f0; /* Light gray text color */
+}
+
+a {
+    text-decoration: none;
+    font-size: 15px;
+    color: #11a8ab; /* Teal link color */
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+:root {
+    --size: 1vmin;
+    --bgr-color: #e91e63;
+    --ico-color: #4e0a21;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000000;
+    background-image: linear-gradient(147deg, #000000 0%, #2c3e50 74%);
+}
+
+.icon-delete {
+    width: calc(var(--size) * 20);
+    height: calc(var(--size) * 20);
+    border: 0;
+    border-radius: calc(var(--size) * 1);
+    outline: none;
+    background: #a4c75a;
+    background: var(--bgr-color);
+    cursor: pointer;
+    position: relative;
+}
+
+.icon-delete:before {
+    background:
+            linear-gradient(0deg, var(--ico-color) 0 calc(var(--size) * 1), #fff0 0 calc( 100% - calc(var(--size) * 1)), var(--ico-color) 0 100%),
+            linear-gradient(90deg, var(--ico-color) 0 calc(var(--size) * 1), #fff0 0 calc( 100% - calc(var(--size) * 6)), var(--ico-color) 0 100%),
+            linear-gradient(45deg, var(--ico-color) 0 calc(var(--size) * 2.35), #fff0 0 100%);
+    width: calc(var(--size) * 12);
+    height: calc(var(--size) * 6);
+    position: absolute;
+    content: "";
+    border-radius: calc(var(--size) * 1);
+    transform: rotate(-45deg);
+    top: calc(var(--size) * 6.5);
+    left: calc(var(--size) * 2);
+    transition: all 0.5s ease 0s;
+}
+
+.icon-delete:after {
+    left: calc(var(--size) * 2);
+    top: calc(var(--size) * 14.5);
+    width: calc(var(--size) * 16);
+    height: calc(var(--size) * 0.9);
+    position: absolute;
+    background:
+            linear-gradient(90deg, var(--bgr-color) 0 45%, #fff0 0 50%, var(--ico-color) 0 100%),
+            repeating-linear-gradient(90deg, var(--bgr-color) 0 3%, var(--ico-color) 0 6%);
+    background-position: 86% 0;
+    background-size: 200%;
+    transition: all 0.5s ease 0s;
+    border-radius: 1px;
+    content: "";
+    border-top: calc(var(--size) * 1) solid var(--bgr-color);
+    border-bottom: calc(var(--size) * 1) solid var(--bgr-color);
+    content: "ERASE !";
+    font-family: Arial, Helvetica, serif;
+    font-size: calc(var(--size) * 4);
+    text-align: center;
+    line-height: calc(var(--size) * 16);
+    color: var(--bgr-color);
+    text-shadow: -1px -1px 1px var(--ico-color), 1px 1px 1px var(--ico-color);
+}
+
+.icon-delete:hover {
+    --ico-color: #18222c;
+    transition: all 0.5s ease 0s;
+}
+
+.icon-delete:hover:before {
+    left: calc(var(--size) * 4);
+}
+
+.icon-delete:hover:after {
+    background-position: 73% 0;
+    content: "ERASE?";
+}
+
+.icon-delete:active {
+    --ico-color: #fff;
+    transition: all 0.5s ease 0s;
+}
+
+.icon-delete:active:before {
+    left: calc(var(--size) * 6);
+}
+
+.icon-delete:active:after {
+    background-position: 60% 0;
+    content: "ERASED";
+    color: #fff;
+}

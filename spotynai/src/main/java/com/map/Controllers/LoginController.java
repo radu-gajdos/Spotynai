@@ -27,9 +27,11 @@ public class LoginController {
             model.addAttribute("userDisplayName", username);
             return "redirect:/homepage";
         } else {
+            model.addAttribute("loginError", "Login failed");
             return "login+signup";
         }
     }
+
 
     @GetMapping("/login")
     @CrossOrigin(origins = "http://localhost:63342")

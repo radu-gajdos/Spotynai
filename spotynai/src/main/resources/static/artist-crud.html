@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artist CRUD</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #333; /* Set default text color */
+        }
+
+        form {
+            margin-bottom: 20px;
+            max-width: 400px; /* Set maximum width for the form */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666; /* Label text color */
+        }
+
+        input {
+            padding: 10px; /* Increased padding for better visibility */
+            margin-bottom: 12px;
+            width: 100%;
+            box-sizing: border-box; /* Include padding in width */
+            border: 1px solid #ddd; /* Add a subtle border */
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px; /* Increased padding for better visibility */
+            cursor: pointer;
+            background-color: #4CAF50; /* Green background color */
+            color: #fff; /* White text color */
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px; /* Add margin to the top of the table */
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Delete button styles */
+        .delete-button {
+            padding: 8px;
+            cursor: pointer;
+            background-color: #e91e63;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-button:hover {
+            background-color: #c2185b;
+        }
+
+        /* Text styling */
+        h2, h3 {
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Artist CRUD Operations</h2>
+
+<!-- Create Artist Form -->
+<form id="createArtistForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="bio">Bio:</label>
+    <input type="text" id="bio" name="bio" required>
+
+    <label for="observers">Observers (comma-separated):</label>
+    <input type="text" id="observers" name="observers">
+
+    <label for="songs">Songs (comma-separated):</label>
+    <input type="text" id="songs" name="songs">
+
+    <button type="button" onclick="createArtist()">Create Artist</button>
+</form>
+
+
+<!-- Artist List -->
+<h3>Artist List</h3>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Bio</th>
+        <th>Observers</th>
+        <th>Songs</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody id="artistListBody"></tbody>
+</table>
+
+
+<script>
+    window.onload = function () {
+        listArtists();
+    };
+
+    function createArtist() {
+        var name = document.getElementById('name').value;
+        var bio = document.getElementById('bio').value;
+        // Assuming you have input fields for the new attributes, add their retrieval here
+        var songs = document.getElementById('songs').value; // Update with the actual input id
+
+        // Split the observer and song values into arrays
+        var songsArray = songs.split(',').map(song => song.trim());
+
+        var artistDto = {
+            name: name,
+            bio: bio,
+            songs: songsArray
+        };
+
+        fetch('http://localhost:8080/create_artist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(artistDto)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Artist created:', data);
+                listArtists(); // Refresh the artist list after creating a new artist
+            })
+            .catch(error => console.error('Error creating artist:', error));
+    }
+
+
+    function deleteArtist(id) {
+        fetch('http://localhost:8080/delete_artist/' + id, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Artist deleted successfully');
+                    listArtists();
+                } else {
+                    console.error('Error deleting artist:', response.statusText);
+                }
+            })
+            .catch(error => console.error('Error deleting artist:', error));
+    }
+
+    function listArtists() {
+        fetch('http://localhost:8080/artists')
+            .then(response => response.json())
+            .then(artists => {
+                var artistListBody = document.getElementById('artistListBody');
+                artistListBody.innerHTML = ''; // Clear the existing content
+
+                artists.forEach(artist => {
+                    var row = artistListBody.insertRow();
+                    row.insertCell(0).textContent = artist.id;
+                    row.insertCell(1).textContent = artist.name;
+                    row.insertCell(2).textContent = artist.bio;
+
+                    // Check if the artist object has observers and songs properties
+                    var observers = artist.observers ? artist.observers.map(observer => observer.name).join(', ') : '';
+                    var songs = artist.songs ? artist.songs.map(song => song.title).join(', ') : '';
+
+                    row.insertCell(3).textContent = observers;
+                    row.insertCell(4).textContent = songs;
+
+                    var deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.className = 'delete-button';
+                    deleteButton.onclick = function () {
+                        deleteArtist(artist.id);
+                    };
+
+                    var cell = row.insertCell(5);
+                    cell.appendChild(deleteButton);
+                });
+            })
+            .catch(error => console.error('Error fetching artists:', error));
+    }
+
+
+</script>
+
+</body>
+
+</html>

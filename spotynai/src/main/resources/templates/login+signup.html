@@ -2,67 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Slide Navbar</title>
-    <link rel="stylesheet" href="/static/Login+signup-Design.css"/>
+    <link rel="stylesheet" href="/Login+signup-Design.css"/>
 </head>
-<script>
-    function attemptLogin() {
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-
-        fetch("http://localhost:8080/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`,
-        })
-            .then(response => {
-                if (response.ok) {
-                } else {
-                    console.error("Login failed");
-                }
-            })
-            .catch(error => {
-                console.error("Error during login:", error);
-            });
-    }
-
-    function attemptSignup() {
-        const username = document.getElementById("signup-username").value;
-        const email = document.getElementById("signup-email").value;
-        const password = document.getElementById("signup-password").value;
-
-        fetch("http://localhost:8080/signup", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: `username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`,
-        })
-            .then(response => {
-                if (response.ok) {
-                    window.location.href = "http://localhost:63342/proiect_MAP_db_front/login+signup/login+signup.html?_ijt=6nf892jl4ef3jloto6uba16mp4&_ij_reload=RELOAD_ON_SAVE";
-                } else {
-                    console.error("Signup failed");
-                }
-            })
-            .catch(error => {
-                console.error("Error during signup:", error);
-            });
-    }
-</script>
-
 <body>
 <div class="main">
     <input type="checkbox" id="chk" aria-hidden="true">
 
     <div class="signup">
-        <form id="signupForm" th:action="@{/signup}" method="post">
+        <form id="signupForm" action="http://localhost:8080/login" method="post">
             <label for="chk" aria-hidden="true">Sign up</label>
             <input type="text" name="txt" id="signup-username" placeholder="User name" required="">
             <input type="email" name="email" id="signup-email" placeholder="Email" required="">
             <input type="password" name="pswd" id="signup-password" placeholder="Password" required="">
-            <button type="button" onclick="attemptSignup()">Sign up</button>
+            <button type="submit">Sign up</button>
         </form>
     </div>
 
@@ -71,7 +23,7 @@
             <label for="chk" aria-hidden="true">Login</label>
             <input type="text" name="username" id="username" placeholder="Email" required="">
             <input type="password" name="password" id="password" placeholder="Password" required="">
-            <button type="submit" >Login</button>
+            <button type="submit">Login</button>
         </form>
     </div>
 </div>
