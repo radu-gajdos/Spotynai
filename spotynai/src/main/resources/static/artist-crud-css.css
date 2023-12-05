@@ -1,4 +1,4 @@
-/* song-crud.css */
+/* artist-crud.css */
 
 body {
     font-family: Arial, sans-serif;
@@ -68,4 +68,8 @@ th {
 
 .delete-button:hover {
     background-color: #c2185b;
+}
+
+h2, h3 {
+    color: #333;
 }
