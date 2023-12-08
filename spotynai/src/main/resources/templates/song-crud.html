@@ -5,14 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Song CRUD</title>
-    <link rel="stylesheet" href="/static/song-crud-css.css">
+    <link rel="stylesheet" href="/song-crud-css.css">
 </head>
 
 <body>
 
 <h2>Song CRUD Operations</h2>
 
-<!-- Create Song Form -->
 <form id="createSongForm">
     <label for="title">Title:</label>
     <input type="text" id="title" name="title" required>
@@ -39,7 +38,6 @@
 </form>
 
 
-<!-- Song List -->
 <h3>Song List</h3>
 <table>
     <thead>
@@ -81,7 +79,6 @@
             duration: duration,
             releaseDate: releaseDate,
             lyrics: lyrics
-            // Include other attributes as needed
         };
 
         fetch('http://localhost:8080/create_song', {
@@ -94,7 +91,7 @@
             .then(response => response.json())
             .then(data => {
                 console.log('Song created:', data);
-                listSongs(); // Refresh the song list after creating a new song
+                listSongs();
             })
             .catch(error => console.error('Error creating song:', error));
     }
@@ -120,7 +117,7 @@
             .then(response => response.json())
             .then(songs => {
                 var songListBody = document.getElementById('songListBody');
-                songListBody.innerHTML = ''; // Clear the existing content
+                songListBody.innerHTML = '';
 
                 songs.forEach(song => {
                     var row = songListBody.insertRow();

@@ -24,12 +24,16 @@ public class LoginController {
         boolean isAuthenticated = userService.authenticateUser(username, password);
 
         if (isAuthenticated) {
-            model.addAttribute("userDisplayName", username);
+            long userId = userService.getUserIdByUsername(username);
+            System.out.println(userId);
+            model.addAttribute("userId", userId);
             return "redirect:/homepage";
         } else {
             model.addAttribute("loginError", "Login failed");
-            return "login+signup";
+            return "redirect:/login";
         }
+
+
     }
 
 

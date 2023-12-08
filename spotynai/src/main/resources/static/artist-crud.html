@@ -12,7 +12,6 @@
 
 <h2>Artist CRUD Operations</h2>
 
-<!-- Create Artist Form -->
 <form id="createArtistForm">
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" required>
@@ -30,7 +29,6 @@
 </form>
 
 
-<!-- Artist List -->
 <h3>Artist List</h3>
 <table>
     <thead>
@@ -55,10 +53,8 @@
     function createArtist() {
         var name = document.getElementById('name').value;
         var bio = document.getElementById('bio').value;
-        // Assuming you have input fields for the new attributes, add their retrieval here
         var songs = document.getElementById('songs').value; // Update with the actual input id
 
-        // Split the observer and song values into arrays
         var songsArray = songs.split(',').map(song => song.trim());
 
         var artistDto = {
