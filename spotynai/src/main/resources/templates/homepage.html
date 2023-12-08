@@ -29,19 +29,19 @@
             <h2 class="titular">MENU BOX</h2>
             <ul class="menu-box-menu">
                 <li>
-                    <a class="menu-box-tab" href="http://localhost:8080/songs"><span class="icon fontawesome-envelope scnd-font-color"></span>Songs<div class="menu-box-number">24</div></a>
+                    <a class="menu-box-tab" href="http://localhost:8080/song-crud"><span class="icon fontawesome-envelope scnd-font-color"></span>Songs<div class="menu-box-number">24</div></a>
                 </li>
                 <li>
-                    <a class="menu-box-tab" href="http://localhost:8080/podcasts"><span class="icon entypo-paper-plane scnd-font-color"></span>Podcasts<div class="menu-box-number">3</div></a>
+                    <a class="menu-box-tab" href="http://localhost:8080/podcast-crud"><span class="icon entypo-paper-plane scnd-font-color"></span>Podcasts<div class="menu-box-number">3</div></a>
                 </li>
                 <li>
-                    <a class="menu-box-tab" href="http://localhost:8080/playlists"><span class="icon entypo-calendar scnd-font-color"></span>Playlists<div class="menu-box-number">5</div></a>
+                    <a class="menu-box-tab" href="http://localhost:8080/playlist-crud"><span class="icon entypo-calendar scnd-font-color"></span>Playlists<div class="menu-box-number">5</div></a>
                 </li>
                 <li>
-                    <a class="menu-box-tab" href="http://localhost:8080/albums"><span class="icon entypo-cog scnd-font-color"></span>Albums</a>
+                    <a class="menu-box-tab" href="http://localhost:8080/album-crud"><span class="icon entypo-cog scnd-font-color"></span>Albums</a>
                 </li>
                 <li>
-                    <a class="menu-box-tab" href="http://localhost:8080/artists"><span class="icon entypo-chart-line scnd-font-color"></span>Artists</a>
+                    <a class="menu-box-tab" href="http://localhost:8080/artist-crud"><span class="icon entypo-chart-line scnd-font-color"></span>Artists</a>
                 </li>
             </ul>
         </div>
@@ -54,7 +54,7 @@
             <div class="profile-picture big-profile-picture clear">
                 <img width="150px" alt="Profile picture" src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Photos.png">
             </div>
-            <h1 class="user-name" id="userDisplayName" th:text="${userId}"></h1>
+            <h1 class="user-name" id="userDisplayName" th:text="${username}"></h1>
             <div class="profile-description" id="profileDescriptionContainer">
                 <p class="scnd-font-color" id="profileDescriptionText">ADD PROFILE DESCRIPTION</p>
                 <input type="text" id="profileDescriptionInput" class="description-input" onkeydown="updateProfileDescription(event)">
@@ -75,6 +75,15 @@
     </style>
 
     <script>
+        function fetchAndSetUserName(userId) {
+            fetch(`/user/${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('userDisplayName').textContent = data.name;
+                })
+                .catch(error => console.error('Error fetching user:', error));
+        }
+
         function updateProfileDescription(event) {
             if (event.key === 'Enter') {
                 const newDescription = document.getElementById('profileDescriptionInput').value;

@@ -24,10 +24,11 @@ public class LoginController {
         boolean isAuthenticated = userService.authenticateUser(username, password);
 
         if (isAuthenticated) {
-            long userId = userService.getUserIdByUsername(username);
-            System.out.println(userId);
-            model.addAttribute("userId", userId);
-            return "redirect:/homepage";
+//            long userId = userService.getUserIdByUsername(username);
+//            System.out.println(userId);
+//            model.addAttribute("userId", userId);
+            model.addAttribute("userName", username);
+            return "redirect:/homepage?username=" + username;
         } else {
             model.addAttribute("loginError", "Login failed");
             return "redirect:/login";
