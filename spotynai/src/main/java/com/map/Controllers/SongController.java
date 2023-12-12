@@ -32,7 +32,7 @@ public class SongController {
     public SongDto createSong(@RequestBody SongDto songDto) {
         SongEntity songEntity = songMapper.mapFrom(songDto);
         SongEntity savedSongEntity = songService.createSong(songEntity);
-        songMementos.put(songEntity.getId(), songEntity.createMemento());
+//        songMementos.put(songEntity.getId(), songEntity.createMemento());
         return songMapper.mapTo(savedSongEntity);
     }
 
