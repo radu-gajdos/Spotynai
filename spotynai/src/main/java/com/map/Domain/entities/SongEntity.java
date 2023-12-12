@@ -1,5 +1,6 @@
 package com.map.Domain.entities;
 
+import com.map.Domain.mementos.SongMemento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,5 +38,19 @@ public class SongEntity {
     private LocalDate releaseDate;
 
     private String lyrics;
+
+    public SongMemento createMemento() {
+        return new SongMemento(this);
+    }
+
+    public void restoreFromMemento(SongMemento memento) {
+        this.albumEntityId = memento.getAlbumEntityId();
+        this.artistEntity = new ArrayList<>(memento.getArtistEntity());
+        this.genreEntity = new ArrayList<>(memento.getGenreEntity());
+        this.title = memento.getTitle();
+        this.duration = memento.getDuration();
+        this.releaseDate = memento.getReleaseDate();
+        this.lyrics = memento.getLyrics();
+    }
 
 }
