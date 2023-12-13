@@ -1,4 +1,5 @@
 package com.map.Domain.entities;
+import com.map.Domain.entities.decorator.UserDecorator;
 import com.map.Domain.observer.Observer;
 import com.map.Domain.observer.Subject;
 import jakarta.persistence.*;
@@ -14,7 +15,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "Users")
 
-public class UserEntity implements Observer {
+public class UserEntity implements Observer, UserDecorator {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Song_id_seq")
     private Long id;
@@ -32,6 +33,8 @@ public class UserEntity implements Observer {
 
     private String userType;
 
+    private String badge = null;
+
     @Override
     public void update(Subject subject) {
         if (subject instanceof ArtistEntity artist) {
@@ -39,4 +42,15 @@ public class UserEntity implements Observer {
         }
     }
 
+    @Override
+    public boolean isAdmin() {
+        return userType.equals("admin");
+    }
+
+    @Override
+    public void setBadge() {
+        if (isAdmin()) {
+            this.badge =  "Admin Badge";
+        }
+    }
 }

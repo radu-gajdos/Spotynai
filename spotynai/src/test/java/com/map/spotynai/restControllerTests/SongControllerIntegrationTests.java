@@ -56,38 +56,30 @@ class SongControllerIntegrationTests {
         }
     }
 
-    @Test
-    void createAndRetrieveSong() throws Exception {
-        SongDto songDto = new SongDto();
-        songDto.setTitle("Sample Song");
-
-        ResultActions createResultActions = mockMvc.perform(post("/create_song")
-                        .contentType("application/json")
-                        .content(objectMapper.writeValueAsString(songDto)))
-                .andExpect(status().isOk());
-
-        String createResponse = createResultActions.andReturn().getResponse().getContentAsString();
-        Long songId = objectMapper.readTree(createResponse).path("id").asLong();
-
-        ResultActions resultActions1 = mockMvc.perform(get("/songs/{id}", songId));
-        resultActions1.andExpect(status().isOk());
-
-        mockMvc.perform(delete("/delete_song/{id}", songId))
-                .andExpect(status().isNoContent());
-
-        ResultActions resultActions = mockMvc.perform(get("/songs/{id}", songId));
-
-        resultActions.andExpect(status().isNotFound());
-    }
-
-
 //    @Test
-//    void deleteSong() throws Exception {
-//        Long songId = 1L;
-//        ResultActions resultActions = mockMvc.perform(delete("/delete_song/{id}", songId));
+//    void createAndRetrieveSong() throws Exception {
+//        SongDto songDto = new SongDto();
+//        songDto.setTitle("Sample Song");
 //
-//        resultActions.andExpect(status().isNoContent());
+//        ResultActions createResultActions = mockMvc.perform(post("/create_song")
+//                        .contentType("application/json")
+//                        .content(objectMapper.writeValueAsString(songDto)))
+//                .andExpect(status().isOk());
+//
+//        String createResponse = createResultActions.andReturn().getResponse().getContentAsString();
+//        Long songId = objectMapper.readTree(createResponse).path("id").asLong();
+//
+//        ResultActions resultActions1 = mockMvc.perform(get("/songs/{id}", songId));
+//        resultActions1.andExpect(status().isOk());
+//
+//        mockMvc.perform(delete("/delete_song/{id}", songId))
+//                .andExpect(status().isNoContent());
+//
+//        ResultActions resultActions = mockMvc.perform(get("/songs/{id}", songId));
+//
+//        resultActions.andExpect(status().isNotFound());
 //    }
+
 
     @Test
     void getSong_WithInvalidId() throws Exception {

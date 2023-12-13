@@ -20,6 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity createUser(UserEntity userEntity) {
+        userEntity.setBadge();
         return userRepo.save(userEntity);
 
     }

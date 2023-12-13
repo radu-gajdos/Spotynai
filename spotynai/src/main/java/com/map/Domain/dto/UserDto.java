@@ -26,4 +26,6 @@ public class UserDto {
     private MembershipDto membershipDto;
 
     private String userType;
+
+    private String badge;
 }

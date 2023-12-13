@@ -24,9 +24,7 @@ public class LoginController {
         boolean isAuthenticated = userService.authenticateUser(username, password);
 
         if (isAuthenticated) {
-//            long userId = userService.getUserIdByUsername(username);
-//            System.out.println(userId);
-//            model.addAttribute("userId", userId);
+
             model.addAttribute("userName", username);
             return "redirect:/homepage?username=" + username;
         } else {
@@ -51,7 +49,7 @@ public class LoginController {
             return "redirect:/signup?error=username_taken";
         }
 
-        UserEntity newUser = new UserEntity(null, username,email, password, null, null, "User");
+        UserEntity newUser = new UserEntity(null, username,email, password, null, null, "User", null);
         userService.createUser(newUser);
 
         return "redirect:/login";

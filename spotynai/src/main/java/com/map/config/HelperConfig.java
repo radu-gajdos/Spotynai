@@ -109,10 +109,10 @@ public class HelperConfig {
     }
 
     public static List<UserEntity> iaUseri() {
-        UserEntity user1 = new UserEntity(null,"alexandru", "alexutusefutau@gmail.com",  "Parola2021!", LocalDate.of(2023, 8, 11),null, "User");
-        UserEntity user2 = new UserEntity(null, "Paul", "paul.lacatus@gmail.com", "Parola2021!", LocalDate.of(2023, 8, 11), null, "Admin");
-        UserEntity user3 = new UserEntity(null, "udar", "alexutusefutau@gmail.com", "Parola2021!", LocalDate.of(2023, 8, 11),null, "User");
-        UserEntity user4 = new UserEntity(null, "radu.gajdos", "gajdosradu@gmail.com", "Parola2021!", LocalDate.of(2003, 6, 11), null, "Admin");
+        UserEntity user1 = new UserEntity(null,"alexandru", "alexutusefutau@gmail.com",  "Parola2021!", LocalDate.of(2023, 8, 11),null, "User", null);
+        UserEntity user2 = new UserEntity(null, "Paul", "paul.lacatus@gmail.com", "Parola2021!", LocalDate.of(2023, 8, 11), null, "Admin", null);
+        UserEntity user3 = new UserEntity(null, "udar", "alexutusefutau@gmail.com", "Parola2021!", LocalDate.of(2023, 8, 11),null, "User", null);
+        UserEntity user4 = new UserEntity(null, "radu.gajdos", "gajdosradu@gmail.com", "Parola2021!", LocalDate.of(2003, 6, 11), null, "Admin", null);
 
         List<UserEntity> result = new ArrayList<>();
         result.add(user1);

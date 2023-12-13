@@ -29,11 +29,11 @@ public class SongController {
 
 
     @PostMapping(path = "/create_song")
-    public ResponseEntity<SongDto> createSong(@RequestBody SongDto songDto) {
+    public SongDto createSong(@RequestBody SongDto songDto) {
         SongEntity songEntity = songMapper.mapFrom(songDto);
         SongEntity savedSongEntity = songService.createSong(songEntity);
-        SongDto savedSongDto = songMapper.mapTo(savedSongEntity);
-        return ResponseEntity.ok(savedSongDto);
+        songMementos.put(songEntity.getId(), songEntity.createMemento());
+        return songMapper.mapTo(savedSongEntity);
     }
 
 
