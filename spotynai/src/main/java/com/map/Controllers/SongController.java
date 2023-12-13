@@ -72,18 +72,8 @@ public class SongController {
         }
 
         SongEntity existingSong = existingSongOptional.get();
-
-        SongMemento existingMemento = songMementos.get(id);
-
-        if (existingMemento != null) {
-            existingMemento = existingSong.createMemento();
-        } else {
-            existingMemento = new SongMemento(existingSong);
-        }
-
-        songMementos.put(id, existingMemento);
-
         songDto.setId(id);
+
         ObjectUpdater.updateFields(existingSong, songDto);
 
         SongEntity savedSongEntity = songService.createSong(existingSong);
@@ -91,6 +81,7 @@ public class SongController {
         return new ResponseEntity<>(
                 songMapper.mapTo(savedSongEntity), HttpStatus.OK);
     }
+
 
 
     @PostMapping(path = "/restore_song/{id}")

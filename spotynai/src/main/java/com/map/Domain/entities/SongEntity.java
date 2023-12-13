@@ -25,7 +25,7 @@ public class SongEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private AlbumEntity albumEntityId;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ArtistEntity> artistEntity;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -44,9 +44,9 @@ public class SongEntity {
     }
 
     public void restoreFromMemento(SongMemento memento) {
-        this.albumEntityId = memento.getAlbumEntityId();
-        this.artistEntity = new ArrayList<>(memento.getArtistEntity());
-        this.genreEntity = new ArrayList<>(memento.getGenreEntity());
+//        this.albumEntityId = memento.getAlbumEntityId();
+//        this.artistEntity = new ArrayList<>(memento.getArtistEntity());
+//        this.genreEntity = new ArrayList<>(memento.getGenreEntity());
         this.title = memento.getTitle();
         this.duration = memento.getDuration();
         this.releaseDate = memento.getReleaseDate();
