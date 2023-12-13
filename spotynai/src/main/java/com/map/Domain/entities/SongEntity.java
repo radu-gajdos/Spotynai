@@ -44,9 +44,6 @@ public class SongEntity {
     }
 
     public void restoreFromMemento(SongMemento memento) {
-//        this.albumEntityId = memento.getAlbumEntityId();
-//        this.artistEntity = new ArrayList<>(memento.getArtistEntity());
-//        this.genreEntity = new ArrayList<>(memento.getGenreEntity());
         this.title = memento.getTitle();
         this.duration = memento.getDuration();
         this.releaseDate = memento.getReleaseDate();
