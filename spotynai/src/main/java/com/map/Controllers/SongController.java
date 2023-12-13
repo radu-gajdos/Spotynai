@@ -29,18 +29,18 @@ public class SongController {
 
 
     @PostMapping(path = "/create_song")
-    public SongDto createSong(@RequestBody SongDto songDto) {
+    public ResponseEntity<SongDto> createSong(@RequestBody SongDto songDto) {
         SongEntity songEntity = songMapper.mapFrom(songDto);
         SongEntity savedSongEntity = songService.createSong(songEntity);
-//        songMementos.put(songEntity.getId(), songEntity.createMemento());
-        return songMapper.mapTo(savedSongEntity);
+        SongDto savedSongDto = songMapper.mapTo(savedSongEntity);
+        return ResponseEntity.ok(savedSongDto);
     }
+
 
     @DeleteMapping(path = "/delete_song/{id}")
     public ResponseEntity deleteSong(@PathVariable("id") Long id) {
         songService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
     }
 
     @GetMapping(path = "/songs")
