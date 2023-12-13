@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "Users")
 
-public class UserEntity implements Observer, UserDecorator {
+public class UserEntity implements Observer{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Song_id_seq")
     private Long id;
@@ -42,15 +42,11 @@ public class UserEntity implements Observer, UserDecorator {
         }
     }
 
-    @Override
     public boolean isAdmin() {
         return userType.equals("admin");
     }
 
-    @Override
     public void setBadge() {
-        if (isAdmin()) {
-            this.badge =  "Admin Badge";
-        }
+         this.badge =  "Admin Badge";
     }
 }

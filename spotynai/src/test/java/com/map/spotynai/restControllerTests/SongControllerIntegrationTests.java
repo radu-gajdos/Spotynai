@@ -94,6 +94,4 @@ class AlbumControllerIntegrationTests {
 
         resultActions.andExpect(status().isNotFound());
     }
-
-
 }

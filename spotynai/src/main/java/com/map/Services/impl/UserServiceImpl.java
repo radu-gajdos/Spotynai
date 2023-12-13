@@ -1,6 +1,7 @@
 package com.map.Services.impl;
 
 import com.map.Domain.entities.UserEntity;
+import com.map.Domain.proxy.UserProxy;
 import com.map.Repositories.UserRepo;
 import com.map.Services.UserService;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity createUser(UserEntity userEntity) {
-        userEntity.setBadge();
+        UserProxy userProxy = new UserProxy(userEntity);
+        userProxy.setBadge();
         return userRepo.save(userEntity);
 
     }
