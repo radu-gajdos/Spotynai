@@ -1,16 +1,8 @@
 package com.map.Controllers;
 
-import com.map.Domain.dto.AlbumDto;
 import com.map.Domain.dto.MembershipDto;
-import com.map.Domain.dto.MembershipDto;
-import com.map.Domain.dto.MembershipDto;
-import com.map.Domain.entities.AlbumEntity;
-import com.map.Domain.entities.MembershipEntity;
-import com.map.Domain.entities.MembershipEntity;
 import com.map.Domain.entities.MembershipEntity;
 import com.map.Mappers.Mapper;
-import com.map.Repositories.MembershipRepo;
-import com.map.Services.MembershipService;
 import com.map.Services.MembershipService;
 import com.map.config.ObjectUpdater;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.InvalidAlgorithmParameterException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

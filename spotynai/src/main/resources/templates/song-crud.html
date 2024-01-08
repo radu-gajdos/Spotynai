@@ -124,15 +124,15 @@
                     row.insertCell(0).textContent = song.id;
                     row.insertCell(1).textContent = song.title;
                     row.insertCell(2).textContent = song.artist;
-                    row.insertCell(3).textContent = song.album ? song.album.title : ''; // Assuming Album has a 'title' attribute
-                    row.insertCell(4).textContent = song.genre ? song.genre.name : ''; // Assuming Genre has a 'name' attribute
+                    row.insertCell(3).textContent = song.album ? song.album.title : '';
+                    row.insertCell(4).textContent = song.genre ? song.genre.name : '';
                     row.insertCell(5).textContent = song.duration;
                     row.insertCell(6).textContent = song.releaseDate;
                     row.insertCell(7).textContent = song.lyrics;
 
                     var deleteButton = document.createElement('button');
                     deleteButton.textContent = 'Delete';
-                    deleteButton.className = 'delete-button'; // Added class for styling
+                    deleteButton.className = 'delete-button';
                     deleteButton.onclick = function () {
                         deleteSong(song.id);
                     };

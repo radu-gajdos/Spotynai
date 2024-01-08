@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podcast CRUD Operations</title>
+    <link rel="stylesheet" href="/song-crud-css.css">
+</head>
+
+<body>
+
+<h2>Podcast CRUD Operations</h2>
+
+<form id="createPodcastForm">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+
+    <label for="host">Host:</label>
+    <input type="text" id="host" name="host" required>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" rows="4"></textarea>
+
+    <label for="releaseDate">Release Date:</label>
+    <input type="date" id="releaseDate" name="releaseDate" required>
+
+    <label for="duration">Duration (minutes):</label>
+    <input type="number" id="duration" name="duration" required>
+
+    <button type="button" onclick="createPodcast()">Create Podcast</button>
+</form>
+
+<h3>Podcast List</h3>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Host</th>
+        <th>Description</th>
+        <th>Release Date</th>
+        <th>Duration</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody id="podcastListBody"></tbody>
+</table>
+
+<script>
+    window.onload = function () {
+        listPodcasts();
+    };
+
+    function createPodcast() {
+        var title = document.getElementById('title').value;
+        var host = document.getElementById('host').value;
+        var description = document.getElementById('description').value;
+        var releaseDate = document.getElementById('releaseDate').value;
+        var duration = document.getElementById('duration').value;
+
+        var podcastDto = {
+            title: title,
+            host: host,
+            description: description,
+            releaseDate: releaseDate,
+            duration: duration
+        };
+
+        fetch('http://localhost:8080/podcasts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(podcastDto)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Podcast created:', data);
+                listPodcasts();
+            })
+            .catch(error => console.error('Error creating podcast:', error));
+    }
+
+    function deletePodcast(id) {
+        fetch('http://localhost:8080/podcasts/' + id, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Podcast deleted successfully');
+                    listPodcasts();
+                } else {
+                    console.error('Error deleting podcast:', response.statusText);
+                }
+            })
+            .catch(error => console.error('Error deleting podcast:', error));
+    }
+
+    function listPodcasts() {
+        fetch('http://localhost:8080/podcasts')
+            .then(response => response.json())
+            .then(podcasts => {
+                var podcastListBody = document.getElementById('podcastListBody');
+                podcastListBody.innerHTML = '';
+
+                podcasts.forEach(podcast => {
+                    var row = podcastListBody.insertRow();
+                    row.insertCell(0).textContent = podcast.id;
+                    row.insertCell(1).textContent = podcast.title;
+                    row.insertCell(2).textContent = podcast.host;
+                    row.insertCell(3).textContent = podcast.description;
+                    row.insertCell(4).textContent = podcast.releaseDate;
+                    row.insertCell(5).textContent = podcast.duration;
+
+                    var deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.className = 'delete-button';
+                    deleteButton.onclick = function () {
+                        deletePodcast(podcast.id);
+                    };
+
+                    var cell = row.insertCell(6);
+                    cell.appendChild(deleteButton);
+                });
+            })
+            .catch(error => console.error('Error fetching podcasts:', error));
+    }
+</script>
+
+</body>
+
+</html>
