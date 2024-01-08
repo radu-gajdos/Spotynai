@@ -25,7 +25,6 @@ public class UserServiceImpl implements UserService {
         UserProxy userProxy = new UserProxy(userEntity);
         userProxy.setBadge();
         return userRepo.save(userEntity);
-
     }
 
     @Override
