@@ -1,8 +1,6 @@
 package com.map.Controllers;
 ;
 import com.map.Domain.dto.ArtistDto;
-import com.map.Domain.dto.ArtistDto;
-import com.map.Domain.entities.ArtistEntity;
 import com.map.Domain.entities.ArtistEntity;
 import com.map.Mappers.Mapper;
 import com.map.Services.ArtistService;

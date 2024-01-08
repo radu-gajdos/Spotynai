@@ -20,9 +20,6 @@ public class SongMemento {
     private String lyrics;
 
     public SongMemento(SongEntity songEntity) {
-//        this.albumEntityId = songEntity.getAlbumEntityId();
-//        this.artistEntity = new ArrayList<>(songEntity.getArtistEntity());
-//        this.genreEntity = new ArrayList<>(songEntity.getGenreEntity());
         this.title = songEntity.getTitle();
         this.duration = songEntity.getDuration();
         this.releaseDate = songEntity.getReleaseDate();

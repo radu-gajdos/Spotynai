@@ -26,11 +26,7 @@ public class UserProxy implements Observer {
     }
 
     public void setBadge() {
-        if (isAdmin()) {
-            if (realUser != null) {
-                realUser.setBadge();
-            }
-        }
+        realUser.setBadge();
     }
 
     public Long getId() {

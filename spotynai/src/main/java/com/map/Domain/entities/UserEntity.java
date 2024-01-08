@@ -47,6 +47,11 @@ public class UserEntity implements Observer{
     }
 
     public void setBadge() {
-         this.badge =  "Admin Badge";
+        if (isAdmin()) {
+            this.badge = "Admin Badge";
+        }
+        else {
+            this.badge = "Regular User";
+        }
     }
 }

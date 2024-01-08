@@ -20,7 +20,7 @@ public class LoginController {
 
     @PostMapping("/login")
     @CrossOrigin(origins = "http://localhost:63342")
-    public String login(@RequestParam String username, @RequestParam String password, Model model) {
+    public String login(@RequestParam String username, @RequestParam String password,  Model model) {
         boolean isAuthenticated = userService.authenticateUser(username, password);
 
         if (isAuthenticated) {

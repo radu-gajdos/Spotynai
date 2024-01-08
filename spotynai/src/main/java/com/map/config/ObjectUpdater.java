@@ -17,7 +17,6 @@ public class ObjectUpdater {
                     targetField.set(target, value);
                 }
             } catch (IllegalAccessException | NoSuchFieldException e) {
-                //TO_DO
             }
         }
     }
