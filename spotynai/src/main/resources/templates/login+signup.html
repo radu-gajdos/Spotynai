@@ -9,14 +9,15 @@
     <input type="checkbox" id="chk" aria-hidden="true">
 
     <div class="signup">
-        <form id="signupForm" action="http://localhost:8080/login" method="post">
+        <form id="signupForm" action="http://localhost:8080/signup" method="post">
             <label for="chk" aria-hidden="true">Sign up</label>
-            <input type="text" name="txt" id="signup-username" placeholder="User name" required="">
+            <input type="text" name="username" id="signup-username" placeholder="User name" required="">
             <input type="email" name="email" id="signup-email" placeholder="Email" required="">
-            <input type="password" name="pswd" id="signup-password" placeholder="Password" required="">
+            <input type="password" name="password" id="signup-password" placeholder="Password" required="">
             <button type="submit">Sign up</button>
         </form>
     </div>
+
 
     <div class="login">
         <form id="loginForm" action="http://localhost:8080/login" method="post">

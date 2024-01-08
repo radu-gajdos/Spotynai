@@ -53,7 +53,7 @@
     function createArtist() {
         var name = document.getElementById('name').value;
         var bio = document.getElementById('bio').value;
-        var songs = document.getElementById('songs').value; // Update with the actual input id
+        var songs = document.getElementById('songs').value;
 
         var songsArray = songs.split(',').map(song => song.trim());
 
@@ -73,7 +73,7 @@
             .then(response => response.json())
             .then(data => {
                 console.log('Artist created:', data);
-                listArtists(); // Refresh the artist list after creating a new artist
+                listArtists();
             })
             .catch(error => console.error('Error creating artist:', error));
     }
@@ -107,7 +107,6 @@
                     row.insertCell(1).textContent = artist.name;
                     row.insertCell(2).textContent = artist.bio;
 
-                    // Check if the artist object has observers and songs properties
                     var observers = artist.observers ? artist.observers.map(observer => observer.name).join(', ') : '';
                     var songs = artist.songs ? artist.songs.map(song => song.title).join(', ') : '';
 

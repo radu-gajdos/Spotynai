@@ -24,16 +24,14 @@ public class LoginController {
         boolean isAuthenticated = userService.authenticateUser(username, password);
 
         if (isAuthenticated) {
-
             model.addAttribute("userName", username);
             return "redirect:/homepage?username=" + username;
         } else {
             model.addAttribute("loginError", "Login failed");
-            return "redirect:/login";
+            return "login+signup";
         }
-
-
     }
+
 
 
     @GetMapping("/login")
